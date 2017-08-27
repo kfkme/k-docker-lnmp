@@ -1,0 +1,67 @@
+  nginx:
+      build: ./build/nginx
+      privileged: true
+      ports:
+        - "80:80"
+        - "443:443"
+      links:
+        - "php71"
+        - "php56"
+      volumes:
+        - ./config/nginx/nginx.conf:/etc/nginx/nginx.conf
+        - ./vhost/:/etc/nginx/conf.d/
+        - ./wwwroot/:/etc/nginx/html/
+        - ./logs/nginx/:/var/log/nginx/
+
+  php71:
+      build: ./build/php71
+      privileged: true
+      ports:
+        - "9071:9000"
+      links:
+        - "mysql"
+        - "redis"
+      volumes:
+        - ./wwwroot/:/etc/nginx/html/
+        - ./config/php71/php.ini:/usr/local/etc/php/php.ini
+        - ./config/php71/php-fpm.conf:/usr/local/etc/php-fpm.conf
+        - ./config/php71/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
+        - ./build/php71/ext:/usr/local/lib/ext
+
+
+  php56:
+      build: ./build/php56
+      privileged: true
+      ports:
+        - "9056:9000"
+      links:
+        - "mysql"
+        - "mongo"
+      volumes:
+        - ./wwwroot/:/etc/nginx/html/
+        - ./config/php56/php.ini:/usr/local/etc/php/php.ini
+        - ./config/php56/php-fpm.conf:/usr/local/etc/php-fpm.conf
+
+  mysql:
+      build: ./build/mysql
+      privileged: true
+      ports:
+        - "3306:3306"
+      volumes:
+        - ./data/mysql:/var/lib/mysql
+      environment:
+        MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+
+  redis:
+      build: ./build/redis
+      privileged: true
+      ports:
+        - "6379:6379"
+
+  mongo:
+      build: ./build/mongo
+      privileged: true
+      ports:
+        - "27017:27017"
+      volumes:
+        - ./data/mongo:/data/db
