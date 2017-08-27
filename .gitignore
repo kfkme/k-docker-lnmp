@@ -17,4 +17,4 @@ vhost/cj.property.conf
 Would skip repository wwwroot/CjProperty
 wwwroot/.DS_Store
 wwwroot/*
-wwwroot/!CjProperty
+wwwroot/!index.php
