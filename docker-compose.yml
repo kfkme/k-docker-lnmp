@@ -28,7 +28,6 @@
         - ./config/php71/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
         - ./build/php71/ext:/usr/local/lib/ext
 
-
   php56:
       build: ./build/php56
       privileged: true
