@@ -48,7 +48,7 @@ sudo docker-compose up --build -d
 sudo docker ps
 
 # 启动部分服务在后边加服务名，不加表示启动所有，-d 表示在后台运行
-sudo docker-compose up [nginx|php71|php56|mysql|redis|mongo] -d
+sudo docker-compose up nginx php71 mysql -d
 
 # 停止和启动类似
 sudo docker-compose stop [nginx|php71|php56|mysql|redis|mongo]
