@@ -1,20 +1,21 @@
 # Created by .ignore support plugin (hsz.mobi)
-.idea/*
-logs/nginx/*
-vhost/*
-vhost/!default.conf
-.env
-.DS_Store
-build/.DS_Store
-build/mysql/my.cnf
-build/php71/.DS_Store
-build/php71/ext/
 data/mongo/*
 data/mysql/*
-env-example
-logs/nginx/
+
+logs/nginx/access.log
+logs/nginx/error.log
+
+vhost/*
+!default.conf
+
+
+
+
 vhost/cj.property.conf
-Would skip repository wwwroot/CjProperty
-wwwroot/.DS_Store
+
 wwwroot/*
-wwwroot/!index.php
+!index.php
+
+.idea/
+.env
+
