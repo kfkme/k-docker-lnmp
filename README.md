@@ -41,6 +41,11 @@ MYSQL_PASSWORD=kfkdock
 sudo docker-compose up --build -d
 ```
 
+#### 配置 xdebug 调试（默认开启xdebug）
+```
+# 修改 kfkdock/config/php71/xdebug.ini 文件
+xdebug.remote_host = 本机IP
+```
 
 #### 常用操作命令
 ```
@@ -53,6 +58,8 @@ sudo docker-compose up nginx php71 mysql -d
 # 停止和启动类似
 sudo docker-compose stop [nginx|php71|php56|mysql|redis|mongo]
 ```
+
+
 #### 修改镜像文件怎么处理？
     
     # 比如在 php 里新增一个扩展
