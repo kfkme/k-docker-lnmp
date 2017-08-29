@@ -1,21 +1,4 @@
 # Created by .ignore support plugin (hsz.mobi)
-data/mongo/*
-data/mysql/*
-
-logs/nginx/access.log
-logs/nginx/error.log
-
-vhost/*
-!default.conf
-
-
-
-
-vhost/cj.property.conf
-
-wwwroot/*
-!index.php
-
 .idea/
 .env
 
