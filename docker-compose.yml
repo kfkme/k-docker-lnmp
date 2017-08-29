@@ -49,7 +49,7 @@
       volumes:
         - ./data/mysql:/var/lib/mysql
       environment:
-        MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+        MYSQL_ROOT_PASSWORD: kfkdock
 
   redis:
       build: ./build/redis
