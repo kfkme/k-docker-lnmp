@@ -57,7 +57,7 @@ sudo chmod +x /usr/local/bin/docker-compose
 # 进入用户目录
 cd ~/
 
-# 下载
+# 下载源码
 git clone https://github.com/kfkme/kfkdock.git
 
 # 进入目录
