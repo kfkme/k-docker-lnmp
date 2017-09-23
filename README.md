@@ -1,7 +1,7 @@
 ![](http://upload-images.jianshu.io/upload_images/424321-3335005c8f02ea3d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 # 视频地址
-> 学徒卡夫 - 卡夫的Mac 07 - 使用 `KFKDock` 搭建PHP项目环境  
+> 学徒卡夫 - 卡夫的Mac 07 - 使用KFKDock搭建PHP项目环境  
 https://www.bilibili.com/video/av13901414/
 
 ## KFKDock 介绍
@@ -32,7 +32,7 @@ PHP编译工具:
 ```
 
 
-## 1、依赖
+## 1、安装依赖
 
 > 安装之前，需要确保系统已经安装以下软件：
 - Git
@@ -50,8 +50,8 @@ curl -L https://get.daocloud.io/docker/compose/releases/download/1.12.0/docker-c
 sudo chmod +x /usr/local/bin/docker-compose
 ```
 
-## 2、安装
-下面我们进入实战，开始基于 `KFKDock` 在本地安装开发环境。
+## 2、使用 KFKDock 配置本地PHP环境
+下面我们进入实战，开始搭建基于 Docker、docker-compose、KFKDock 配置本地PHP环境。
 
 ```
 # 进入用户目录
@@ -82,7 +82,7 @@ vi ~/kfkdock/www/index.php
 # 地址栏访问 localhost
 http://localhost
 
-# 成功！
+# 恭喜你，KFKDock配置成功！
 ```
 ## 4、配置一个Laravel项目测试
 
