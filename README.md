@@ -1,38 +1,24 @@
-![](http://static.laravelacademy.org/wp-content/uploads/2016/12/docker-banner2.jpg)
+![](http://upload-images.jianshu.io/upload_images/424321-3335005c8f02ea3d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 # 视频地址
 > 学徒卡夫 - 卡夫的Mac 07 - 使用 `KFKDock` 搭建PHP项目环境  
 https://www.bilibili.com/video/av13901414/
 
-以后应该用不到之前的镜像与容器，所以建议清空下
-
-```
-docker stop 容器ID/Name
-
-# 删除所有容器
-docker rm `docker ps -a -q`
-
-# 删除所有的镜像
-docker rmi $(docker images -q)
-```
-
-## 1、开始之前
+## KFKDock 介绍
 > KFKDock 致力于简化创建开发环境过程，能够帮你在Docker上快速搭建PHP项目环境。 
 
 支持的软件
 ```
-数据库引擎:
-    MySQL
-    MongoDB
+数据库引擎: 
+    MySQL、MongoDB
     
-缓存引擎:
-    Redis
-    Memcached
+缓存引擎: 
+    Redis、Memcached
     
-PHP 服务器:
+PHP服务器: 
     NGINX
 
-PHP 编译工具:
+PHP编译工具: 
     PHP-FPM
 ```
 目录结构
@@ -46,25 +32,25 @@ PHP 编译工具:
 ```
 
 
-## 2、依赖
+## 1、依赖
 
 > 安装之前，需要确保系统已经安装以下软件：
 - Git
 - Docker
 - docker-compose
 
-1、安装 docker
+安装 docker
 ```
 https://www.docker.com/docker-mac
 ```
-2、安装 docker-compose
+安装 docker-compose
 ```
 # 注意：你如果用的是非 root 用户，执行 curl 会提示没权限写入 /usr/local/bin 目录，可以先写入当前目录，再使用 sudo mv 过去
 curl -L https://get.daocloud.io/docker/compose/releases/download/1.12.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
 ```
 
-## 3、安装
+## 2、安装
 下面我们进入实战，开始基于 `KFKDock` 在本地安装开发环境。
 
 ```
@@ -83,7 +69,7 @@ sudo docker-compose build
 # 启动容器
 sudo docker-compose up -d php71 nginx mysql
 ```
-## 4、测试
+## 3、测试
 
 ```
 
@@ -100,7 +86,7 @@ http://localhost
 
 # 成功！
 ```
-## 5、配置一个Laravel项目测试
+## 4、配置一个Laravel项目测试
 
 ```
 vi /etc/host
@@ -150,6 +136,20 @@ http://laravel.cc
 ```
 
 ## 其他
+
+#### 一键删除容器、镜像
+
+```
+# 关闭容器
+docker stop 容器ID/Name
+
+# 删除所有容器
+docker rm `docker ps -a -q`
+
+# 删除所有的镜像
+docker rmi $(docker images -q)
+```
+
 #### 配置 DockerHub 加速器
 ```
 # 阿里云加速器
@@ -207,7 +207,7 @@ RUN if [ ${INSTALL_XDEBUG} = true ]; then \
 ```
 
 
-## 特别鸣谢
+## KFKDock参考过以下项目，非常感谢。
 - [docker-lnmp](https://github.com/beautysoft/docker-lnmp)
 - [LaraDock](https://github.com/laradock/laradock)
 
