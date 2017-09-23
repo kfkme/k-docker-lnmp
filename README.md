@@ -40,8 +40,8 @@ PHP 编译工具:
 /kfkdock
     /data                   数据
     /logs                   日志
-    /nginx/vhost            Nginx 项目配置文件
-    /wwwroot                项目目录
+    /vhost                  Nginx 项目配置文件
+    /www                    项目目录
     /docker-compose.yml     docker-compose 配置文件
 ```
 
