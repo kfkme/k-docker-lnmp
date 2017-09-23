@@ -72,8 +72,6 @@ sudo docker-compose up -d php71 nginx mysql
 ## 3、测试
 
 ```
-
-
 # 启动容器
 cd ~/kfkdock
 sudo docker-compose up
@@ -207,7 +205,7 @@ RUN if [ ${INSTALL_XDEBUG} = true ]; then \
 ```
 
 
-## KFKDock参考过以下项目，非常感谢。
+## KFKDock参考过以下项目，非常感谢。🙏
 - [docker-lnmp](https://github.com/beautysoft/docker-lnmp)
 - [LaraDock](https://github.com/laradock/laradock)
 
