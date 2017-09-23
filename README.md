@@ -83,7 +83,24 @@ sudo docker-compose build
 # 启动容器
 sudo docker-compose up -d php71 nginx mysql
 ```
-## 4、配置一个Laravel项目测试
+## 4、测试
+
+```
+
+
+# 启动容器
+cd ~/kfkdock
+sudo docker-compose up
+
+# 修噶PHP文件
+vi ~/kfkdock/www/index.php
+
+# 地址栏访问 localhost
+http://localhost
+
+# 成功！
+```
+## 5、配置一个Laravel项目测试
 
 ```
 vi /etc/host
@@ -96,20 +113,15 @@ vi /etc/host
 # 进入 php71 容器
 docker-compose exec php71 bash
 
-# 更换composer源
-composer config -g repo.packagist composer https://packagist.phpcomposer.com
-
-# 进入项目目录
+# 加载Composer依赖
 cd /var/www/laravel
-
-# composer 更新项目
 composer install --no-plugins --no-scripts
 
-# 退出容器，添加 laravel项目的nginx配置文件
-# vi ~/kfkdock/vhost/laravel.cc.conf
+# 退出容器，设置Laravel项目的nginx配置
+vi ~/kfkdock/vhost/laravel.cc.conf
 server {
     listen       80;
-    server_name  deflat.cc;
+    server_name  laravel.cc;
     root   /var/www/laravel/public;
     index  index.php index.html index.htm;
 
@@ -133,6 +145,8 @@ docker-composer restart
 
 # 访问测试域名
 http://laravel.cc
+
+# 成功！
 ```
 
 ## 其他
@@ -191,10 +205,6 @@ RUN if [ ${INSTALL_XDEBUG} = true ]; then \
 ;fi
 
 ```
-
-
-
-
 
 
 ## 特别鸣谢

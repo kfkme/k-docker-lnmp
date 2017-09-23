@@ -75,7 +75,7 @@ RUN if [ ${INSTALL_XDEBUG} = true ]; then \
 
 
 #####################################
-# PHP设置
+# PHP设置 #这里应该没生效 有时间弄下
 #####################################
 RUN	echo "[Date]" >> /usr/local/etc/php/php.ini \
 	&& echo "date.timezone = 'Asia/Taipei'" >> /usr/local/etc/php/php.ini \
