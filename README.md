@@ -78,7 +78,7 @@ sudo docker-compose up -d php71 nginx mysql
 cd ~/kfkdock
 sudo docker-compose up
 
-# 修噶PHP文件
+# 修改PHP文件
 vi ~/kfkdock/www/index.php
 
 # 地址栏访问 localhost
