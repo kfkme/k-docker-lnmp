@@ -100,5 +100,4 @@ ENV TZ=Asia/Shanghai
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone \
 	&& ntpdate 182.92.12.11
 
-# 默认加载目录
 WORKDIR /var/www
