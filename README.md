@@ -209,5 +209,5 @@ RUN if [ ${INSTALL_XDEBUG} = true ]; then \
 
 ## 特别鸣谢
 - [docker-lnmp](https://github.com/beautysoft/docker-lnmp)
-- LaraDock
+- [LaraDock](https://github.com/laradock/laradock)
 
