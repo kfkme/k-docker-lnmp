@@ -106,11 +106,11 @@ cd /var/www/laravel
 composer install --no-plugins --no-scripts
 
 # 退出容器，添加 laravel项目的nginx配置文件
-# vi ~/kfkdock/vhost/deflat.cc.conf
+# vi ~/kfkdock/vhost/laravel.cc.conf
 server {
     listen       80;
     server_name  deflat.cc;
-    root   /etc/nginx/html/laravel/public;
+    root   /var/www/laravel/public;
     index  index.php index.html index.htm;
 
     location / {
@@ -135,8 +135,6 @@ docker-composer restart
 http://laravel.cc
 ```
 
-
-
 ## 其他
 #### 配置 DockerHub 加速器
 ```
@@ -154,6 +152,50 @@ http://laravel.cc
 # 修改 php71/xdebug.ini 文件
 xdebug.remote_host = 本机IP
 ```
+
+
+## docker-compose.yml 语法
+
+```
+# 设置环境变量 INSTALL_XDEBUG
+version: '2'
+services:
+  php71:
+      build:
+        context: ./php71
+        dockerfile: Dockerfile
+        args:
+          - INSTALL_XDEBUG=true
+      privileged: true
+      ports:
+        - "9071:9000"
+```
+
+## Dockerfile 语法
+
+```
+写入（覆盖写入） >
+RUN pecl install /home/redis.tgz \
+	&& echo "extension=redis.so" > /usr/local/etc/php/conf.d/redis.ini
+追加 >>
+RUN pecl install /home/xdebug.tgz \
+    && echo "[xdebug]" >> /usr/local/etc/php/conf.d/xdebug.ini \
+    && echo "zend_extension=xdebug.so" >> /usr/local/etc/php/conf.d/xdebug.ini \
+
+使用环境变量
+ARG INSTALL_XDEBUG=false
+COPY ./ext/xdebug-2.5.5.tgz /home/xdebug.tgz
+COPY xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
+RUN if [ ${INSTALL_XDEBUG} = true ]; then \
+    pecl install /home/xdebug.tgz \
+;fi
+
+```
+
+
+
+
+
 
 ## 特别鸣谢
 - [docker-lnmp](https://github.com/beautysoft/docker-lnmp)
