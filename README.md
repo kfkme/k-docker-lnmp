@@ -15,7 +15,7 @@ https://www.bilibili.com/video/av13901414/
 缓存引擎: 
     Redis、Memcached
     
-PHP服务器: 
+Web服务器: 
     NGINX
 
 PHP编译工具: 
