@@ -1,7 +1,7 @@
 version: '2'
 services:
   nginx:
-      build: ./nginx
+      build: ./etc/nginx
       privileged: true
       ports:
         - "80:80"
@@ -10,14 +10,14 @@ services:
         - "php71"
         - "php56"
       volumes:
-        - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+        - ./etc/nginx/nginx.conf:/etc/nginx/nginx.conf
         - ./vhost/:/etc/nginx/conf.d/
         - ./www/:/var/www/
         - ./logs/nginx/:/var/log/nginx/
 
   php71:
       build:
-        context: ./php71
+        context: ./etc/php71
         dockerfile: Dockerfile
         args:
           - INSTALL_XDEBUG=true
@@ -29,13 +29,13 @@ services:
         - "redis"
       volumes:
         - ./www/:/var/www/
-        - ./php71/php.ini:/usr/local/etc/php/php.ini
-        - ./php71/php-fpm.conf:/usr/local/etc/php-fpm.conf
-        - ./php71/ext:/usr/local/lib/ext
+        - ./etc/php71/php.ini:/usr/local/etc/php/php.ini
+        - ./etc/php71/php-fpm.conf:/usr/local/etc/php-fpm.conf
+        - ./etc/php71/ext:/usr/local/lib/ext
         - ./logs/php/xdebug/:/tmp/
 
   php56:
-      build: ./php56
+      build: ./etc/php56
       privileged: true
       ports:
         - "9056:9000"
@@ -44,11 +44,11 @@ services:
         - "mongo"
       volumes:
         - ./www/:/var/www/
-        - ./php56/php.ini:/usr/local/etc/php/php.ini
-        - ./php56/php-fpm.conf:/usr/local/etc/php-fpm.conf
+        - ./etc/php56/php.ini:/usr/local/etc/php/php.ini
+        - ./etc/php56/php-fpm.conf:/usr/local/etc/php-fpm.conf
 
   mysql:
-      build: ./mysql
+      build: ./etc/mysql
       privileged: true
       ports:
         - "3306:3306"
@@ -58,13 +58,13 @@ services:
         MYSQL_ROOT_PASSWORD: kfkdock
 
   redis:
-      build: ./redis
+      build: ./etc/redis
       privileged: true
       ports:
         - "6379:6379"
 
   mongo:
-      build: ./mongo
+      build: ./etc/mongo
       privileged: true
       ports:
         - "27017:27017"

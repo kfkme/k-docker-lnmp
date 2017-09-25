@@ -25,6 +25,7 @@ PHP编译工具:
 ```
 /kfkdock
     /data                   数据
+    /etc                    应用
     /logs                   日志
     /vhost                  Nginx 项目配置文件
     /www                    项目目录
