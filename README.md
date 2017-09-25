@@ -159,9 +159,9 @@ docker rmi $(docker images -q)
 # 腾讯云加速器
 # https://www.qcloud.com/document/product/457/7207
 ```
-#### 配置 DockerHub 配置 xdebug
+#### 配置 xdebug
 ```
-# 修改 php71/xdebug.ini 文件
+# 修改 php71/xdebug.ini 更改本机IP即可！
 xdebug.remote_host = 本机IP
 ```
 
