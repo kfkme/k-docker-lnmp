@@ -58,9 +58,9 @@ RUN pecl install /home/redis.tgz \
 #####################################
 # 安装 Mcrypt 加密扩展
 #####################################
-COPY ./ext/mcrypt-1.0.0.tgz /home/mcrypt.tgz
-RUN pecl install /home/mcrypt.tgz \
-	&& echo "extension=mcrypt.so" > /usr/local/etc/php/conf.d/mcrypt.ini
+# COPY ./ext/mcrypt-1.0.0.tgz /home/mcrypt.tgz
+# RUN pecl install /home/mcrypt.tgz \
+	# && echo "extension=mcrypt.so" > /usr/local/etc/php/conf.d/mcrypt.ini
 
 
 #####################################
