@@ -5,7 +5,9 @@
 https://www.bilibili.com/video/av13901414/
 
 ## KFKDock 介绍
-> KFKDock 致力于简化创建开发环境过程，能够帮你在Docker上快速搭建PHP项目环境。 
+> KFKDock是一个开源的，基于Docker的容器化应用，用于快速搭建PHP环境。
+
+> KFKDock的优势：跨平台(Linux/Mac/Win)、统一开发与生产环境 
 
 支持的软件
 ```
