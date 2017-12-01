@@ -1,110 +1,92 @@
 ![](http://upload-images.jianshu.io/upload_images/424321-3335005c8f02ea3d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-# 视频地址
-> 学徒卡夫 - 卡夫的Mac 07 - 使用KFKDock搭建PHP项目环境  
-https://www.bilibili.com/video/av13901414/
+## KFKDock
+Docker容器化应用，快速搭建PHP环境。
+包含PHP5.6，PHP7.1，Nginx，Mysql5.6，Mysql5.7，MongoDB，Redis，Memcached等服务。  
+其优势：跨平台、统一开发与生产环境 
 
-## KFKDock 介绍
-> KFKDock是一个开源的，基于Docker的容器化应用，用于快速搭建PHP环境。
+> 视频教程  
 
-> KFKDock的优势：跨平台(Linux/Mac/Win)、统一开发与生产环境 
+[使用KFKDock搭建PHP项目环境](https://www.bilibili.com/video/av13901414/)
 
-支持的软件
-```
-数据库引擎: 
-    MySQL、MongoDB
-    
-缓存引擎: 
-    Redis、Memcached
-    
-Web服务器: 
-    NGINX
+## 包含的软件
+1. PHP5.6
+1. PHP7.1
+1. Nginx
+1. Mysql5.6（默认密码:kfkdock）
+1. Mysql5.7（默认密码:kfkdock）
+1. MongoDB
+1. Redis
+1. Memcached
 
-PHP编译工具: 
-    PHP-FPM
-```
-目录结构
+## 目录结构
 ```
 /kfkdock
-    /data                   数据
-    /etc                    应用
-    /logs                   日志
-    /vhost                  Nginx 项目配置文件
+    /data                   数据库数据（mysql,redis,mongo）
+    /etc                    应用配置项
+    /logs                   各种日志（mysql,nginx,php）
+    /vhost                  虚拟主机配置
     /www                    项目目录
-    /docker-compose.yml     docker-compose 配置文件
+    /docker-compose.yml     docker-compose配置文件
 ```
 
 
-## 1、安装依赖
+> 使用之前，请安装必要的工具
 
-> 安装之前，需要确保系统已经安装以下软件：
-- Git
-- Docker
-- docker-compose
+[docker/docker-compose/加速器](README_DEPEND.md)
 
-安装 docker
-```
-https://www.docker.com/docker-mac
-```
-安装 docker-compose
-```
-# 注意：你如果用的是非 root 用户，执行 curl 会提示没权限写入 /usr/local/bin 目录，可以先写入当前目录，再使用 sudo mv 过去
-curl -L https://get.daocloud.io/docker/compose/releases/download/1.12.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
-sudo chmod +x /usr/local/bin/docker-compose
-```
 
-## 2、使用 KFKDock 配置本地PHP环境
-下面我们进入实战，开始搭建基于 Docker、docker-compose、KFKDock 配置本地PHP环境。
-
+## 构建
 ```
-# 进入用户目录
+#进入用户目录
 cd ~/
 
-# 下载源码
+#下载源码
 git clone https://github.com/kfkme/kfkdock.git
 
-# 进入目录
+#进入目录
 cd kfkdock
 
-# 构建\重建容器
+#构建\重建容器
 sudo docker-compose build
 
-# 启动容器
-sudo docker-compose up -d php71 nginx mysql
+#启动容器
+sudo docker-compose up -d
 ```
-## 3、测试
+## 测试PHP代码
 
 ```
 # 启动容器
 cd ~/kfkdock
 sudo docker-compose up
 
-# 修改PHP文件
+#修改PHP文件
 vi ~/kfkdock/www/index.php
 
-# 地址栏访问 localhost
+#地址栏访问 localhost
 http://localhost
 
-# 恭喜你，KFKDock配置成功！
+#完成！
 ```
-## 4、配置一个Laravel项目测试
+## 测试Laravel项目
 
 ```
+#编辑本地host文件
 vi /etc/host
-# 加入
+#加入
 127.0.0.1   laravel.cc
 
-# 复制一份Laravel项目
-~/kfkdock/wwwroot/laravel
+#复制一份Laravel项目
+~/kfkdock/www/laravel
 
-# 进入 php71 容器
+#进入 php71 容器
 docker-compose exec php71 bash
 
-# 加载Composer依赖
+#加载Composer依赖
 cd /var/www/laravel
 composer install --no-plugins --no-scripts
 
-# 退出容器，设置Laravel项目的nginx配置
+#退出容器，设置Laravel项目的nginx配置
 vi ~/kfkdock/vhost/laravel.cc.conf
 server {
     listen       80;
@@ -124,91 +106,23 @@ server {
 	}
 }
 
-# 退出容器
+#退出容器
 exit
 
-# 重启容器，应用配置
+#重启容器，应用配置
 docker-composer restart
 
-# 访问测试域名
+#访问测试域名
 http://laravel.cc
 
-# 成功！
+#成功！
 ```
 
-## 其他
+> 其他
 
-#### 一键删除容器、镜像
+[快捷键/配置XDebug/docker-compose.yml语法解释/Dockerfile语法解释](README_OTHER.md)
 
-```
-# 关闭容器
-docker stop 容器ID/Name
-
-# 删除所有容器
-docker rm `docker ps -a -q`
-
-# 删除所有的镜像
-docker rmi $(docker images -q)
-```
-
-#### 配置 DockerHub 加速器
-```
-# 阿里云加速器
-# 每个人有对应的加速地址，访问 `https://dev.aliyun.com` ->【管理中心】-> 【DockerHub 镜像站点】配置加速器
-
-# DaoCloud 加速器
-# http://guide.daocloud.io/dcs/daocloud-9153151.html
-
-# 腾讯云加速器
-# https://www.qcloud.com/document/product/457/7207
-```
-#### 配置 xdebug
-```
-# 修改 php71/xdebug.ini 更改本机IP即可！
-xdebug.remote_host = 本机IP
-```
-
-
-## docker-compose.yml 语法
-
-```
-# 设置环境变量 INSTALL_XDEBUG
-version: '2'
-services:
-  php71:
-      build:
-        context: ./php71
-        dockerfile: Dockerfile
-        args:
-          - INSTALL_XDEBUG=true
-      privileged: true
-      ports:
-        - "9071:9000"
-```
-
-## Dockerfile 语法
-
-```
-写入（覆盖写入） >
-RUN pecl install /home/redis.tgz \
-	&& echo "extension=redis.so" > /usr/local/etc/php/conf.d/redis.ini
-追加 >>
-RUN pecl install /home/xdebug.tgz \
-    && echo "[xdebug]" >> /usr/local/etc/php/conf.d/xdebug.ini \
-    && echo "zend_extension=xdebug.so" >> /usr/local/etc/php/conf.d/xdebug.ini \
-
-使用环境变量
-ARG INSTALL_XDEBUG=false
-COPY ./ext/xdebug-2.5.5.tgz /home/xdebug.tgz
-COPY xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
-RUN if [ ${INSTALL_XDEBUG} = true ]; then \
-    pecl install /home/xdebug.tgz \
-;fi
-
-```
-
-
-## KFKDock参考过以下项目，非常感谢。🙏
+## 参考
 - [docker-lnmp](https://github.com/beautysoft/docker-lnmp)
 - [LaraDock](https://github.com/laradock/laradock)
 

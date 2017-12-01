@@ -25,7 +25,8 @@ services:
       ports:
         - "9071:9000"
       links:
-        - "mysql"
+        - "mysql57"
+        - "mysql56"
         - "redis"
       volumes:
         - ./www/:/var/www/
@@ -40,20 +41,33 @@ services:
       ports:
         - "9056:9000"
       links:
-        - "mysql"
+        - "mysql57"
+        - "mysql56"
         - "mongo"
       volumes:
         - ./www/:/var/www/
         - ./etc/php56/php.ini:/usr/local/etc/php/php.ini
         - ./etc/php56/php-fpm.conf:/usr/local/etc/php-fpm.conf
 
-  mysql:
-      build: ./etc/mysql
+  mysql57:
+      build: ./etc/mysql57
       privileged: true
       ports:
         - "3306:3306"
       volumes:
-        - ./data/mysql:/var/lib/mysql
+        - ./data/mysql57:/var/lib/mysql
+        - ./logs/mysql57/:/var/log/mysql
+      environment:
+        MYSQL_ROOT_PASSWORD: kfkdock
+
+  mysql56:
+      build: ./etc/mysql56
+      privileged: true
+      ports:
+        - "33056:3306"
+      volumes:
+        - ./data/mysql56:/var/lib/mysql
+        - ./logs/mysql56/:/var/log/mysql
       environment:
         MYSQL_ROOT_PASSWORD: kfkdock
 
