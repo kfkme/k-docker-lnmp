@@ -1,9 +1,7 @@
-![](http://upload-images.jianshu.io/upload_images/424321-3335005c8f02ea3d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 ## KFKDock
-Docker容器化应用，快速搭建PHP环境。
+Docker容器化应用，快速搭建PHP环境。  
 包含PHP5.6，PHP7.1，Nginx，Mysql5.6，Mysql5.7，MongoDB，Redis，Memcached等服务。  
-其优势：跨平台、统一开发与生产环境 
 
 > 视频教程  
 
