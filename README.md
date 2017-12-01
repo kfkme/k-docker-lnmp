@@ -1,9 +1,9 @@
 
 ## KFKDock
-Docker容器化应用，快速搭建PHP环境。  
-包含PHP5.6，PHP7.1，Nginx，Mysql5.6，Mysql5.7，MongoDB，Redis，Memcached等服务。  
+Docker容器化应用，快速搭建PHP环境  
+包含PHP5.6，PHP7.1，Nginx，Mysql5.6，Mysql5.7，MongoDB，Redis，Memcached等服务  
 
-> 视频教程  
+## 视频教程  
 
 [使用KFKDock搭建PHP项目环境](https://www.bilibili.com/video/av13901414/)
 
