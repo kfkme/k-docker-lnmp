@@ -33,6 +33,8 @@ RUN apt-get update && apt-get install -y \
       unzip \
       git \
     && rm -r /var/lib/apt/lists/* \
+    # GD依赖
+    && docker-php-ext-configure gd --with-freetype-dir --with-jpeg-dir \
     && docker-php-ext-configure pdo_mysql --with-pdo-mysql=mysqlnd \
     && docker-php-ext-install \
       intl \
