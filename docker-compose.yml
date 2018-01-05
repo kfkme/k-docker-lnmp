@@ -1,5 +1,8 @@
 version: '2'
 services:
+
+### Nginx Server Container #############################
+
   nginx:
       build: ./etc/nginx
       privileged: true
@@ -14,6 +17,8 @@ services:
         - ./vhost/:/etc/nginx/conf.d/
         - ./www/:/var/www/
         - ./logs/nginx/:/var/log/nginx/
+
+### PHP Container #############################
 
   php71:
       build:
@@ -49,6 +54,8 @@ services:
         - ./etc/php56/php.ini:/usr/local/etc/php/php.ini
         - ./etc/php56/php-fpm.conf:/usr/local/etc/php-fpm.conf
 
+### MYSQL Container #############################
+
   mysql57:
       build: ./etc/mysql57
       privileged: true
@@ -58,7 +65,7 @@ services:
         - ./data/mysql57:/var/lib/mysql
         - ./logs/mysql57/:/var/log/mysql
       environment:
-        MYSQL_ROOT_PASSWORD: kfkdock
+        - MYSQL_ROOT_PASSWORD=kfkdock
 
   mysql56:
       build: ./etc/mysql56
@@ -69,13 +76,30 @@ services:
         - ./data/mysql56:/var/lib/mysql
         - ./logs/mysql56/:/var/log/mysql
       environment:
-        MYSQL_ROOT_PASSWORD: kfkdock
+        - MYSQL_ROOT_PASSWORD=kfkdock
+
+### PostgreSQL Container ####################################
+
+  postgres:
+    build: ./etc/postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=default
+      - POSTGRES_USER=default
+      - POSTGRES_PASSWORD=kfkdock
+
+### Redis Container #############################
 
   redis:
       build: ./etc/redis
       privileged: true
       ports:
         - "6379:6379"
+
+### Mongo Container #############################
 
   mongo:
       build: ./etc/mongo
