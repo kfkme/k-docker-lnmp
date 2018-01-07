@@ -98,6 +98,8 @@ services:
       privileged: true
       ports:
         - "6379:6379"
+      volumes:
+        - ./data/redis:/data
 
 ### Mongo Container #############################
 
