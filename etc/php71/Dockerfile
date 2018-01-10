@@ -94,6 +94,7 @@ RUN	echo "[Date]" >> /usr/local/etc/php/php.ini \
 ADD ./ext/composer.phar /usr/local/bin/composer
 RUN chmod 755 /usr/local/bin/composer
 RUN composer config -g repo.packagist composer https://packagist.laravel-china.org
+RUN composer self-update
 
 
 #####################################
