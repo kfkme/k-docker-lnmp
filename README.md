@@ -129,13 +129,11 @@ http://laravel.cc
 
 [快捷键/配置XDebug/docker-compose.yml语法解释/Dockerfile语法解释](README_OTHER.md)
 
-## 参考
+## QQ交流群
 
-群号:259937756
+群号: 259937756
 
-<a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=d604c39ddbe6f75a9e0aa7697c4b5e43c542d6865707342f9688d59389100893">
-![群号:259937756](https://pub.idqqimg.com/wpa/images/group.png)
-</a>
+![](http://ww1.sinaimg.cn/large/750f80a1ly1fp2b1kky0qj208e08e747.jpg)
 
 ## 参考
 - [docker-lnmp](https://github.com/beautysoft/docker-lnmp)
