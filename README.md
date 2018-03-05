@@ -133,9 +133,7 @@ http://laravel.cc
 
 群号:259937756
 
-<a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=d604c39ddbe6f75a9e0aa7697c4b5e43c542d6865707342f9688d59389100893">
-<img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="KFKDock" title="KFKDock">
-</a>
+<a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=d604c39ddbe6f75a9e0aa7697c4b5e43c542d6865707342f9688d59389100893">![image](//pub.idqqimg.com/wpa/images/group.png)</a>
 
 ## 参考
 - [docker-lnmp](https://github.com/beautysoft/docker-lnmp)
