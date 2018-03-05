@@ -131,6 +131,9 @@ http://laravel.cc
 
 ## QQ交流群
 
+<a target="_blank" href="https://shang.qq.com/wpa/qunwpa?idkey=a593151f7e27a4cb7041db186f09f9727d6af2184737637d52f23d2431372065"><img border="0" src="https://pub.idqqimg.com/wpa/images/group.png" 
+alt="KFKDock" title="KFKDock"></a>
+
 群号: 259937756
 
 ![](http://ww1.sinaimg.cn/large/750f80a1ly1fp2b1kky0qj208e08e747.jpg)
