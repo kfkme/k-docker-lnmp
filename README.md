@@ -9,9 +9,10 @@ Docker容器化应用，快速搭建PHP环境
 4. 资源隔离和分组：使用cgroups将CPU、内存之类的资源独立分配给每个Docker容器
 5. 写时复制：文件系统是分层的、都是通过写操作进行复制创建，占用空间更小
 
+## GitHub地址
+[https://github.com/kfkme/kfkdock](https://github.com/kfkme/kfkdock)
 
 ## 视频教程  
-
 [使用KFKDock搭建PHP项目环境](https://www.bilibili.com/video/av13901414/)
 
 ## 包含的软件
@@ -34,7 +35,7 @@ Docker容器化应用，快速搭建PHP环境
 
 
 > 使用之前，请安装必要的工具
-[docker/docker-compose/加速器](README_DEPEND.md)
+[docker/docker-compose/加速器](https://github.com/kfkme/kfkdock/README_DEPEND.md)
 
 
 ## 构建
@@ -127,7 +128,7 @@ http://laravel.cc
 
 > 其他
 
-[快捷键/配置XDebug/docker-compose.yml语法解释/Dockerfile语法解释](README_OTHER.md)
+[快捷键/配置XDebug/docker-compose.yml语法解释/Dockerfile语法解释](https://github.com/kfkme/kfkdock/README_OTHER.md)
 
 ## QQ交流群
 
