@@ -35,7 +35,7 @@ Docker容器化应用，快速搭建PHP环境
 
 
 > 使用之前，请安装必要的工具
-[docker/docker-compose/加速器](https://github.com/kfkme/kfkdock/README_DEPEND.md)
+[docker/docker-compose/加速器](https://github.com/kfkme/kfkdock/blob/master/README_DEPEND.md)
 
 
 ## 构建
@@ -128,7 +128,7 @@ http://laravel.cc
 
 > 其他
 
-[快捷键/配置XDebug/docker-compose.yml语法解释/Dockerfile语法解释](https://github.com/kfkme/kfkdock/README_OTHER.md)
+[快捷键/配置XDebug/docker-compose.yml语法解释/Dockerfile语法解释](https://github.com/kfkme/kfkdock/blob/master/README_OTHER.md)
 
 ## QQ交流群
 
