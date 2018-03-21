@@ -126,6 +126,17 @@ http://laravel.cc
 #成功！
 ```
 
+> 数据库配置
+
+```
+DB_CONNECTION=mysql
+DB_HOST=mysql57
+DB_PORT=3306
+DB_DATABASE=shop
+DB_USERNAME=root
+DB_PASSWORD=kfkdock
+```
+
 > 其他
 
 [快捷键/配置XDebug/docker-compose.yml语法解释/Dockerfile语法解释](https://github.com/kfkme/kfkdock/blob/master/README_OTHER.md)
