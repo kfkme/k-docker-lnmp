@@ -30,6 +30,7 @@ Docker容器化应用，快速搭建PHP环境
     /etc                    应用配置项
     /logs                   各种日志（mysql,nginx,php）
     /vhost                  虚拟主机配置
+    /www                    项目目录
     /docker-compose.yml     docker-compose配置文件
 ```
 
@@ -42,12 +43,6 @@ Docker容器化应用，快速搭建PHP环境
 ```
 #进入用户目录
 cd ~/
-
-#创建项目目录
-mkdir www
-
-#给权限
-chmod -R 777 www
 
 #下载源码
 git clone https://github.com/kfkme/kfkdock.git
