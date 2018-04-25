@@ -33,7 +33,6 @@ RUN apt-get update && apt-get install -y \
       unzip \
       git \
       libxml++2.6-dev \
-      php-soap \
     && rm -r /var/lib/apt/lists/* \
     # GD依赖
     && docker-php-ext-configure gd --with-freetype-dir --with-jpeg-dir \
@@ -49,8 +48,7 @@ RUN apt-get update && apt-get install -y \
       pgsql \
       zip \
       gd \
-      opcache \
-      soap
+      opcache
 
 
 #####################################
