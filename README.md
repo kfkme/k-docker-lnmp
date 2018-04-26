@@ -1,6 +1,7 @@
 
 ## KFKDock
-Docker容器化应用，快速搭建PHP环境  
+Docker容器化应用，根据自定义配置文件快速搭建PHP环境。简化一步步手动配置服务器的过程。
+![](http://ww1.sinaimg.cn/large/750f80a1ly1fqpzttoimnj20vl0j4dk6.jpg)
 
 ## 为什么使用 Docker
 1. 文件系统隔离：每个容器有自己的Root文件系统，假设你的服务器被入侵，服务器本身不受影响
