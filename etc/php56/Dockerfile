@@ -16,8 +16,17 @@ ENV TZ=Asia/Shanghai
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone \
 	&& ntpdate 182.92.12.11
 
+#####################################
+# 安装 Redis 扩展
+#####################################
+COPY ./ext/redis-3.1.3.tgz /home/redis.tgz
+RUN pecl install /home/redis.tgz \
+	&& echo "extension=redis.so" > /usr/local/etc/php/conf.d/redis.ini
+
+#####################################
 # 安装 Mongo 扩展
-COPY mongo.tgz /home/mongo.tgz
+#####################################
+COPY ./ext/mongo.tgz /home/mongo.tgz
 WORKDIR /home
 RUN tar -zxvf mongo.tgz
 WORKDIR /home/mongo-php-driver-legacy-master
