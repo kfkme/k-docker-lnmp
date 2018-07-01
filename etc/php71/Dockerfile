@@ -4,7 +4,9 @@ FROM php:7.1-fpm
 #####################################
 # 更换 apt-get 源
 #####################################
+# 备份 Ubuntu初始软件更新源
 RUN mv /etc/apt/sources.list /etc/apt/source.list.bak
+# 切换 网易163 Ubuntu软件更新源
 COPY sources.list /etc/apt/sources.list
 RUN apt-get update \
 	&& apt-get -y upgrade
