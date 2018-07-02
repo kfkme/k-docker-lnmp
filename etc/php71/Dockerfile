@@ -7,7 +7,7 @@ FROM php:7.1-fpm
 # 备份 Ubuntu初始软件更新源
 RUN mv /etc/apt/sources.list /etc/apt/source.list.bak
 # 切换 网易163 Ubuntu软件更新源
-#COPY sources.list /etc/apt/sources.list
+COPY sources.list /etc/apt/sources.list
 #RUN sed -i s/us.archive.ubuntu.com/mirrors.163.com/g /etc/apt/sources.list
 #RUN sed -i s/security.ubuntu.com/mirrors.163.com/g /etc/apt/sources.list
 
@@ -20,39 +20,39 @@ RUN apt-get upgrade
 # 安装基础组件以及常用扩展
 #####################################
 RUN apt-get update && apt-get install -y \
-      libicu-dev \
-      libpq-dev \
-      libpng-dev \
-      libjpeg-dev \
-      libfreetype6-dev \
-      libmcrypt-dev \
-      libmhash-dev \
-      mysql-client \
-      libmysqlclient-dev \
-      ruby-full \
-      nodejs \
-      ntpdate \
-      wget \
-      cron \
-      unzip \
-      git \
-      libxml++2.6-dev \
-    && rm -r /var/lib/apt/lists/* \
-    # GD依赖
-    && docker-php-ext-configure gd --with-freetype-dir --with-jpeg-dir \
-    && docker-php-ext-configure pdo_mysql --with-pdo-mysql=mysqlnd \
-    && docker-php-ext-install \
-      intl \
-      mbstring \
-      mcrypt \
-      mysqli \
-      pcntl \
-      pdo_mysql \
-      pdo_pgsql \
-      pgsql \
-      zip \
-      gd \
-      opcache
+  libicu-dev \
+  libpq-dev \
+  libpng-dev \
+  libjpeg-dev \
+  libfreetype6-dev \
+  libmcrypt-dev \
+  libmhash-dev \
+  mysql-client \
+  libmysqlclient-dev \
+  ruby-full \
+  nodejs \
+  ntpdate \
+  wget \
+  cron \
+  unzip \
+  git \
+  libxml++2.6-dev \
+&& rm -r /var/lib/apt/lists/* \
+# GD依赖
+&& docker-php-ext-configure gd --with-freetype-dir --with-jpeg-dir \
+&& docker-php-ext-configure pdo_mysql --with-pdo-mysql=mysqlnd \
+&& docker-php-ext-install \
+  intl \
+  mbstring \
+  mcrypt \
+  mysqli \
+  pcntl \
+  pdo_mysql \
+  pdo_pgsql \
+  pgsql \
+  zip \
+  gd \
+  opcache
 
 
 #####################################
