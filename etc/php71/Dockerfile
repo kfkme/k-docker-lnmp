@@ -8,7 +8,9 @@ FROM php:7.1-fpm
 RUN mv /etc/apt/sources.list /etc/apt/source.list.bak
 # 切换 网易163 Ubuntu软件更新源
 #COPY sources.list /etc/apt/sources.list
-RUN sed -i 's/archive.ubuntu.com/mirrors.ustc.edu.cn/g' /etc/apt/sources.list
+RUN sed -i s/us.archive.ubuntu.com/mirrors.163.com/g /etc/apt/sources.list
+RUN sed -i s/security.ubuntu.com/mirrors.163.com/g /etc/apt/sources.list
+
 RUN apt-get -y update
 RUN apt-get upgrade
 
