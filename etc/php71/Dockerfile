@@ -72,7 +72,7 @@ RUN docker-php-ext-configure bcmath --enable-bcmath \
     zip \
     gd \
     opcache \
-  && ocker-php-ext-configure gd --with-freetype-dir --with-jpeg-dir \
+  && docker-php-ext-configure gd --with-freetype-dir --with-jpeg-dir \
     --enable-gd-native-ttf \
     --with-jpeg-dir=/usr/lib \
     --with-freetype-dir=/usr/include/freetype2 \
