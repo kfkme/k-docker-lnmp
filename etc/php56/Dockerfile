@@ -24,13 +24,7 @@ RUN apt-get update \
 
 
 # 安装PHP插件
-RUN docker-php-ext-configure bcmath --enable-bcmath \
-    && docker-php-ext-configure pcntl --enable-pcntl \
-    && docker-php-ext-configure pdo_mysql --with-pdo-mysql \
-    && docker-php-ext-configure pdo_pgsql --with-pgsql \
-    && docker-php-ext-configure mbstring --enable-mbstring \
-    && docker-php-ext-configure soap --enable-soap \
-    && docker-php-ext-install \
+RUN docker-php-ext-install \
         bcmath \
         intl \
         mbstring \
@@ -48,47 +42,6 @@ RUN docker-php-ext-configure bcmath --enable-bcmath \
     docker-php-ext-install gd \
   && docker-php-ext-install opcache \
   && docker-php-ext-enable opcache
-
-
-# AST
-RUN git clone https://github.com/nikic/php-ast /usr/src/php/ext/ast/ && \
-    docker-php-ext-configure ast && \
-    docker-php-ext-install ast
-
-
-# ICU - intl requirements for Symfony
-# Debian is out of date, and Symfony expects the latest - so build from source, unless a better alternative exists(?)
-RUN curl -sS -o /tmp/icu.tar.gz -L http://download.icu-project.org/files/icu4c/58.2/icu4c-58_2-src.tgz \
-    && tar -zxf /tmp/icu.tar.gz -C /tmp \
-    && cd /tmp/icu/source \
-    && ./configure --prefix=/usr/local \
-    && make \
-    && make install
-
-RUN docker-php-ext-configure intl --with-icu-dir=/usr/local \
-    && docker-php-ext-install intl
-
-# 安装 Redis 扩展
-COPY ./redis-3.1.3.tgz /home/redis.tgz
-RUN pecl install /home/redis.tgz \
-	&& echo "extension=redis.so" > /usr/local/etc/php/conf.d/redis.ini
-
-
-# 复制 opcache 配置
-COPY ./opcache.ini /usr/local/etc/php/conf.d/opcache.ini
-
-
-# 安装xDebug,如果启用
-ARG INSTALL_XDEBUG=false
-RUN if [ ${INSTALL_XDEBUG} = true ]; then \
-    # 安装xdebug扩展
-    pecl install xdebug && \
-    docker-php-ext-enable xdebug \
-;fi
-
-
-# 复制xdebug信任用于远程调试
-COPY ./xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
 
 # 复制时区配置
 COPY ./timezone.ini /usr/local/etc/php/conf.d/timezone.ini
