@@ -1,39 +1,118 @@
 FROM php:5.6-fpm
 
-# 更换 apt-get 源
-RUN mv /etc/apt/sources.list /etc/apt/source.list.bak
-COPY sources.list /etc/apt/sources.list
-RUN gpg --keyserver keyserver.ubuntu.com --recv-keys 40976EAF437D05B5 \
-	&& gpg -a --export 40976EAF437D05B5 | apt-key add - \
-	&& apt-get update \
-	&& apt-get -y upgrade
+# 安装基础
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends \
+    curl \
+    iputils-ping \
+    libicu-dev \
+    libmemcached-dev \
+    libz-dev \
+    libpq-dev \
+    libjpeg-dev \
+    libpng-dev \
+    libfreetype6-dev \
+    libssl-dev \
+    libmcrypt-dev \
+    libxml2-dev \
+    libbz2-dev \
+    libjpeg62-turbo-dev \
+    curl \
+    git \
+    subversion \
+  && rm -rf /var/lib/apt/lists/*
 
-# 安装基础组件
-RUN apt-get install -y ntpdate cron vim unzip git libssl-dev
 
-# 设置时区 && 同步时间
-ENV TZ=Asia/Shanghai
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone \
-	&& ntpdate 182.92.12.11
+# 安装PHP插件
+RUN docker-php-ext-configure bcmath --enable-bcmath \
+    && docker-php-ext-configure pcntl --enable-pcntl \
+    && docker-php-ext-configure pdo_mysql --with-pdo-mysql \
+    && docker-php-ext-configure pdo_pgsql --with-pgsql \
+    && docker-php-ext-configure mbstring --enable-mbstring \
+    && docker-php-ext-configure soap --enable-soap \
+    && docker-php-ext-install \
+        bcmath \
+        intl \
+        mbstring \
+        mysqli \
+        pcntl \
+        pdo_mysql \
+        pdo_pgsql \
+        soap \
+        sockets \
+        zip \
+  && docker-php-ext-configure gd \
+    --enable-gd-native-ttf \
+    --with-jpeg-dir=/usr/lib \
+    --with-freetype-dir=/usr/include/freetype2 && \
+    docker-php-ext-install gd \
+  && docker-php-ext-install opcache \
+  && docker-php-ext-enable opcache
 
-#####################################
+
+# AST
+RUN git clone https://github.com/nikic/php-ast /usr/src/php/ext/ast/ && \
+    docker-php-ext-configure ast && \
+    docker-php-ext-install ast
+
+
+# ICU - intl requirements for Symfony
+# Debian is out of date, and Symfony expects the latest - so build from source, unless a better alternative exists(?)
+RUN curl -sS -o /tmp/icu.tar.gz -L http://download.icu-project.org/files/icu4c/58.2/icu4c-58_2-src.tgz \
+    && tar -zxf /tmp/icu.tar.gz -C /tmp \
+    && cd /tmp/icu/source \
+    && ./configure --prefix=/usr/local \
+    && make \
+    && make install
+
+RUN docker-php-ext-configure intl --with-icu-dir=/usr/local \
+    && docker-php-ext-install intl
+
 # 安装 Redis 扩展
-#####################################
-COPY ./ext/redis-3.1.3.tgz /home/redis.tgz
+COPY ./redis-3.1.3.tgz /home/redis.tgz
 RUN pecl install /home/redis.tgz \
 	&& echo "extension=redis.so" > /usr/local/etc/php/conf.d/redis.ini
 
-#####################################
-# 安装 Mongo 扩展
-#####################################
-COPY ./ext/mongo.tgz /home/mongo.tgz
-WORKDIR /home
-RUN tar -zxvf mongo.tgz
-WORKDIR /home/mongo-php-driver-legacy-master
-RUN phpize \
-	&& ./configure \
-	&& make && make install \
-	&& echo "extension=mongo.so" > /usr/local/etc/php/conf.d/mongo.ini
 
-# 安装 PDO_MYSQL 扩展
-RUN docker-php-ext-install pdo_mysql
+# 复制 opcache 配置
+COPY ./opcache.ini /usr/local/etc/php/conf.d/opcache.ini
+
+
+# 安装xDebug,如果启用
+ARG INSTALL_XDEBUG=false
+RUN if [ ${INSTALL_XDEBUG} = true ]; then \
+    # 安装xdebug扩展
+    pecl install xdebug && \
+    docker-php-ext-enable xdebug \
+;fi
+
+
+# 复制xdebug信任用于远程调试
+COPY ./xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
+
+# 复制时区配置
+COPY ./timezone.ini /usr/local/etc/php/conf.d/timezone.ini
+
+# 设置时区
+RUN rm /etc/localtime
+RUN ln -s /usr/share/zoneinfo/Europe/London /etc/localtime
+RUN "date"
+
+
+# Short open tags fix - another Symfony requirements
+COPY ./custom-php.ini /usr/local/etc/php/conf.d/custom-php.ini
+
+# Composer
+ENV COMPOSER_HOME /var/www/.composer
+
+RUN curl -sS https://getcomposer.org/installer | php -- \
+    --install-dir=/usr/bin \
+    --filename=composer
+
+
+RUN chown -R www-data:www-data /var/www/
+
+RUN mkdir -p $COMPOSER_HOME/cache
+
+VOLUME $COMPOSER_HOME
+WORKDIR /var/www

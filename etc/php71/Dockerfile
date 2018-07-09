@@ -1,27 +1,9 @@
 FROM php:7.1.9-fpm
 
-
-#####################################
-# 更换 apt-get 源
-#####################################
-
-# 备份 Ubuntu初始软件更新源
-RUN cp /etc/apt/sources.list /etc/apt/source.list.bak
-
-# 切换 网易163 Ubuntu软件更新源
-#COPY sources.list /etc/apt/sources.list
-#RUN sed -i s/us.archive.ubuntu.com/mirrors.163.com/g /etc/apt/sources.list
-RUN sed -i s/security.ubuntu.com/mirrors.163.com/g /etc/apt/sources.list
-
-RUN gpg --keyserver keyserver.ubuntu.com --recv-keys 40976EAF437D05B5 \
-	&& gpg -a --export 40976EAF437D05B5 | apt-key add - \
-	&& apt-get update \
-	&& apt-get -y upgrade
-
-
-# 安装基础组件
+# 安装基础
 RUN apt-get update \
-  && apt-get install -y --no-install-recommends\
+  && apt-get install -y --no-install-recommends \
+    curl \
     iputils-ping \
     libicu-dev \
     libmemcached-dev \
@@ -32,107 +14,119 @@ RUN apt-get update \
     libfreetype6-dev \
     libssl-dev \
     libmcrypt-dev \
-    libmhash-dev \
-    libmysqlclient-dev \
     libxml2-dev \
     libbz2-dev \
     libjpeg62-turbo-dev \
     curl \
-    mysql-client \
-    ruby-full \
-    nodejs \
-    ntpdate \
-    wget \
-    cron \
-    unzip \
     git \
     subversion \
-    libxml++2.6-dev \
-  && rm -r /var/lib/apt/lists/*
+  && rm -rf /var/lib/apt/lists/*
 
-# Install various PHP extensions(安装插件)
+
+# 安装PHP插件
 RUN docker-php-ext-configure bcmath --enable-bcmath \
-  && docker-php-ext-configure pcntl --enable-pcntl \
-  && docker-php-ext-configure pdo_mysql --with-pdo-mysql=mysqlnd \
-  && docker-php-ext-configure pdo_pgsql --with-pgsql \
-  && docker-php-ext-configure mbstring --enable-mbstring \
-  && docker-php-ext-configure soap --enable-soap \
-  && docker-php-ext-install \
-    bcmath \
-    intl \
-    mbstring \
-    mcrypt \
-    mysqli \
-    pcntl \
-    pdo_mysql \
-    pdo_pgsql \
-    pgsql \
-    soap \
-    sockets \
-    zip \
-    gd \
-    opcache \
-  && docker-php-ext-configure gd --with-freetype-dir --with-jpeg-dir \
+    && docker-php-ext-configure pcntl --enable-pcntl \
+    && docker-php-ext-configure pdo_mysql --with-pdo-mysql \
+    && docker-php-ext-configure pdo_pgsql --with-pgsql \
+    && docker-php-ext-configure mbstring --enable-mbstring \
+    && docker-php-ext-configure soap --enable-soap \
+    && docker-php-ext-install \
+        bcmath \
+        intl \
+        mbstring \
+        mysqli \
+        pcntl \
+        pdo_mysql \
+        pdo_pgsql \
+        soap \
+        sockets \
+        zip \
+  && docker-php-ext-configure gd \
     --enable-gd-native-ttf \
     --with-jpeg-dir=/usr/lib \
-    --with-freetype-dir=/usr/include/freetype2 \
-  && docker-php-ext-install gd \
+    --with-freetype-dir=/usr/include/freetype2 && \
+    docker-php-ext-install gd \
   && docker-php-ext-install opcache \
   && docker-php-ext-enable opcache
 
 
-#####################################
+# AST
+RUN git clone https://github.com/nikic/php-ast /usr/src/php/ext/ast/ && \
+    docker-php-ext-configure ast && \
+    docker-php-ext-install ast
+
+
+# ICU - intl requirements for Symfony
+# Debian is out of date, and Symfony expects the latest - so build from source, unless a better alternative exists(?)
+RUN curl -sS -o /tmp/icu.tar.gz -L http://download.icu-project.org/files/icu4c/58.2/icu4c-58_2-src.tgz \
+    && tar -zxf /tmp/icu.tar.gz -C /tmp \
+    && cd /tmp/icu/source \
+    && ./configure --prefix=/usr/local \
+    && make \
+    && make install
+
+RUN docker-php-ext-configure intl --with-icu-dir=/usr/local \
+    && docker-php-ext-install intl
+
 # 安装 Redis 扩展
-#####################################
-COPY ./ext/redis-3.1.3.tgz /home/redis.tgz
+COPY ./redis-3.1.3.tgz /home/redis.tgz
 RUN pecl install /home/redis.tgz \
 	&& echo "extension=redis.so" > /usr/local/etc/php/conf.d/redis.ini
 
+# 安装 PHP Memcached 扩展
+RUN curl -L -o /tmp/memcached.tar.gz "https://github.com/php-memcached-dev/php-memcached/archive/php7.tar.gz" \
+  && mkdir -p memcached \
+  && tar -C memcached -zxvf /tmp/memcached.tar.gz --strip 1 \
+  && ( \
+    cd memcached \
+    && phpize \
+    && ./configure \
+    && make -j$(nproc) \
+    && make install \
+  ) \
+  && rm -r memcached \
+  && rm /tmp/memcached.tar.gz \
+  && docker-php-ext-enable memcached
 
-#####################################
-# 安装 Mcrypt 加密扩展
-#####################################
-# COPY ./ext/mcrypt-1.0.0.tgz /home/mcrypt.tgz
-# RUN pecl install /home/mcrypt.tgz \
-	# && echo "extension=mcrypt.so" > /usr/local/etc/php/conf.d/mcrypt.ini
+# 复制 opcache 配置
+COPY ./opcache.ini /usr/local/etc/php/conf.d/opcache.ini
 
 
-#####################################
-# 安装 xDebug 扩展
-#####################################
+# 安装xDebug,如果启用
 ARG INSTALL_XDEBUG=false
-COPY ./ext/xdebug-2.5.5.tgz /home/xdebug.tgz
-COPY xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
 RUN if [ ${INSTALL_XDEBUG} = true ]; then \
-    pecl install /home/xdebug.tgz \
+    # 安装xdebug扩展
+    pecl install xdebug && \
+    docker-php-ext-enable xdebug \
 ;fi
 
 
-#####################################
-# PHP设置 #这里应该没生效 有时间弄下
-#####################################
-RUN	echo "[Date]" >> /usr/local/etc/php/php.ini \
-	&& echo "date.timezone = 'Asia/Taipei'" >> /usr/local/etc/php/php.ini \
-	&& echo "upload_max_filesize = 50M" >> /usr/local/etc/php/php.ini \
-	&& echo "post_max_size = 50M" >> /usr/local/etc/php/php.ini \
-	&& echo "max_execution_time = 0" >> /usr/local/etc/php/php.ini \
-	&& echo "memory_limit = -1" >> /usr/local/etc/php/php.ini
+# 复制xdebug信任用于远程调试
+COPY ./xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
+
+# 复制时区配置
+COPY ./timezone.ini /usr/local/etc/php/conf.d/timezone.ini
+
+# 设置时区
+RUN rm /etc/localtime
+RUN ln -s /usr/share/zoneinfo/Europe/London /etc/localtime
+RUN "date"
 
 
-#####################################
-# 安装 composer 并设置中国源
-#####################################
-ADD ./ext/composer.phar /usr/local/bin/composer
-RUN chmod 755 /usr/local/bin/composer
-RUN composer config -g repo.packagist composer https://packagist.laravel-china.org
-RUN composer self-update
+# Short open tags fix - another Symfony requirements
+COPY ./custom-php.ini /usr/local/etc/php/conf.d/custom-php.ini
+
+# Composer
+ENV COMPOSER_HOME /var/www/.composer
+
+RUN curl -sS https://getcomposer.org/installer | php -- \
+    --install-dir=/usr/bin \
+    --filename=composer
 
 
-#####################################
-# 设置时区 && 同步时间
-#####################################
-ENV TZ=Asia/Shanghai
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone \
-	&& ntpdate 182.92.12.11
+RUN chown -R www-data:www-data /var/www/
 
+RUN mkdir -p $COMPOSER_HOME/cache
+
+VOLUME $COMPOSER_HOME
 WORKDIR /var/www
