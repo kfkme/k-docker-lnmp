@@ -2,7 +2,7 @@
 ```
 https://www.docker.com/docker-mac
 ```
-##安装 docker-compose
+## 安装 docker-compose
 ```
 # 注意：你如果用的是非 root 用户，执行 curl 会提示没权限写入 /usr/local/bin 目录，可以先写入当前目录，再使用 sudo mv 过去
 curl -L https://get.daocloud.io/docker/compose/releases/download/1.12.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
