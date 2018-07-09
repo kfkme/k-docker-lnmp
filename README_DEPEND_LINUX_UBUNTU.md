@@ -27,3 +27,5 @@ curl -sSL https://get.daocloud.io/daotools/set_mirror.sh | sh -s http://33b39435
 #执行下上面命令，然后重启docker 以完成加速器的配置
 service docker restart
 ```
+
+#### [返回](https://github.com/kfkme/kfkdock/blob/master/README.md#%E6%9E%84%E5%BB%BA)
