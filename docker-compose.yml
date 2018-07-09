@@ -35,9 +35,6 @@ services:
         - "redis"
       volumes:
         - ./www/:/var/www/
-        - ./etc/php71/php.ini:/usr/local/etc/php/php.ini
-        - ./etc/php71/php-fpm.conf:/usr/local/etc/php-fpm.conf
-        - ./etc/php71/ext:/usr/local/lib/ext
         - ./logs/php/xdebug/:/tmp/
 
   php56:
@@ -51,8 +48,6 @@ services:
         - "mongo"
       volumes:
         - ./www/:/var/www/
-        - ./etc/php56/php.ini:/usr/local/etc/php/php.ini
-        - ./etc/php56/php-fpm.conf:/usr/local/etc/php-fpm.conf
 
 ### MYSQL Container #############################
 
