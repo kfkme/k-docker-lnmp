@@ -1,54 +1,84 @@
-FROM php:7.1-fpm
+FROM php:7.1.9-fpm
 
 
 #####################################
 # 更换 apt-get 源
 #####################################
-RUN mv /etc/apt/sources.list /etc/apt/source.list.bak
-COPY sources.list /etc/apt/sources.list
+
+# 备份 Ubuntu初始软件更新源
+RUN cp /etc/apt/sources.list /etc/apt/source.list.bak
+
+# 切换 网易163 Ubuntu软件更新源
+#COPY sources.list /etc/apt/sources.list
+#RUN sed -i s/us.archive.ubuntu.com/mirrors.163.com/g /etc/apt/sources.list
+RUN sed -i s/security.ubuntu.com/mirrors.163.com/g /etc/apt/sources.list
+
 RUN gpg --keyserver keyserver.ubuntu.com --recv-keys 40976EAF437D05B5 \
 	&& gpg -a --export 40976EAF437D05B5 | apt-key add - \
 	&& apt-get update \
 	&& apt-get -y upgrade
 
 
-#####################################
-# 安装基础组件以及常用扩展
-#####################################
-RUN apt-get update && apt-get install -y \
-      libicu-dev \
-      libpq-dev \
-      libpng-dev \
-      libjpeg-dev \
-      libfreetype6-dev \
-      libmcrypt-dev \
-      libmhash-dev \
-      mysql-client \
-      libmysqlclient-dev \
-      ruby-full \
-      nodejs \
-      ntpdate \
-      wget \
-      cron \
-      unzip \
-      git \
-      libxml++2.6-dev \
-    && rm -r /var/lib/apt/lists/* \
-    # GD依赖
-    && docker-php-ext-configure gd --with-freetype-dir --with-jpeg-dir \
-    && docker-php-ext-configure pdo_mysql --with-pdo-mysql=mysqlnd \
-    && docker-php-ext-install \
-      intl \
-      mbstring \
-      mcrypt \
-      mysqli \
-      pcntl \
-      pdo_mysql \
-      pdo_pgsql \
-      pgsql \
-      zip \
-      gd \
-      opcache
+# 安装基础组件
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends\
+    iputils-ping \
+    libicu-dev \
+    libmemcached-dev \
+    libz-dev \
+    libpq-dev \
+    libjpeg-dev \
+    libpng-dev \
+    libfreetype6-dev \
+    libssl-dev \
+    libmcrypt-dev \
+    libmhash-dev \
+    libmysqlclient-dev \
+    libxml2-dev \
+    libbz2-dev \
+    libjpeg62-turbo-dev \
+    curl \
+    mysql-client \
+    ruby-full \
+    nodejs \
+    ntpdate \
+    wget \
+    cron \
+    unzip \
+    git \
+    subversion \
+    libxml++2.6-dev \
+  && rm -r /var/lib/apt/lists/*
+
+# Install various PHP extensions(安装插件)
+RUN docker-php-ext-configure bcmath --enable-bcmath \
+  && docker-php-ext-configure pcntl --enable-pcntl \
+  && docker-php-ext-configure pdo_mysql --with-pdo-mysql=mysqlnd \
+  && docker-php-ext-configure pdo_pgsql --with-pgsql \
+  && docker-php-ext-configure mbstring --enable-mbstring \
+  && docker-php-ext-configure soap --enable-soap \
+  && docker-php-ext-install \
+    bcmath \
+    intl \
+    mbstring \
+    mcrypt \
+    mysqli \
+    pcntl \
+    pdo_mysql \
+    pdo_pgsql \
+    pgsql \
+    soap \
+    sockets \
+    zip \
+    gd \
+    opcache \
+  && ocker-php-ext-configure gd --with-freetype-dir --with-jpeg-dir \
+    --enable-gd-native-ttf \
+    --with-jpeg-dir=/usr/lib \
+    --with-freetype-dir=/usr/include/freetype2 \
+  && docker-php-ext-install gd \
+  && docker-php-ext-install opcache \
+  && docker-php-ext-enable opcache
 
 
 #####################################

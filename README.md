@@ -135,7 +135,7 @@ DB_PASSWORD=kfkdock
 
 > 其他
 
-[快捷键/配置XDebug/docker-compose.yml语法解释/Dockerfile语法解释](https://github.com/kfkme/kfkdock/blob/master/README_OTHER.md)
+[删除容器镜像/配置XDebug/docker-compose.yml语法解释/Dockerfile语法解释](https://github.com/kfkme/kfkdock/blob/master/README_OTHER.md)
 
 ## QQ交流群
 

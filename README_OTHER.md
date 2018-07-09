@@ -2,7 +2,9 @@
 ```
 # 关闭容器
 docker stop 容器ID/Name
-
+```
+## 删除容器镜像
+```
 # 删除所有容器
 docker rm `docker ps -a -q`
 
