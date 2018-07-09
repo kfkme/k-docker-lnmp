@@ -36,8 +36,10 @@ Docker容器化应用，根据自定义配置文件快速搭建PHP环境。简�
 ```
 
 
-> 使用之前，请安装必要的工具
-[docker/docker-compose/加速器](https://github.com/kfkme/kfkdock/blob/master/README_DEPEND.md)
+## 使用之前，请安装必要的工具
+[[Mac] docker/docker-compose/加速器](https://github.com/kfkme/kfkdock/blob/master/README_DEPEND_MAC.md)
+
+[[Linux] docker/docker-compose/加速器](https://github.com/kfkme/kfkdock/blob/master/README_DEPEND_LINUX.md)
 
 
 ## 构建
