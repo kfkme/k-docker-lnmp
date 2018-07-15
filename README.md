@@ -116,7 +116,7 @@ server {
 exit
 
 #重启容器，应用配置
-docker-composer restart
+docker-compose restart
 
 #访问测试域名
 http://laravel.cc
