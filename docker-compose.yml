@@ -25,7 +25,7 @@ services:
         context: ./etc/php71
         dockerfile: Dockerfile
         args:
-          - INSTALL_XDEBUG=true
+          - INSTALL_XDEBUG=false
       privileged: true
       ports:
         - "9071:9000"
