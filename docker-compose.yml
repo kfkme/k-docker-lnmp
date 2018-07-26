@@ -35,7 +35,6 @@ services:
         - "redis"
       volumes:
         - ./www/:/var/www/
-        - ./logs/php/xdebug/:/tmp/
 
   php56:
       build: ./etc/php56
