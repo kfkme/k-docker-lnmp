@@ -102,7 +102,7 @@ RUN if [ ${INSTALL_XDEBUG} = true ]; then \
 
 
 # 复制xdebug信任用于远程调试
-COPY ./xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
+# COPY ./xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
 
 # 复制时区配置
 COPY ./timezone.ini /usr/local/etc/php/conf.d/timezone.ini
