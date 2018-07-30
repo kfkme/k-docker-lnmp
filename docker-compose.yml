@@ -35,7 +35,8 @@ services:
         - "redis"
       volumes:
         - ./www/:/var/www/
-
+        - ./data/php71/user_key:/root/.ssh
+        - ./data/php71/deploy_key:/var/www/.ssh
   php56:
       build: ./etc/php56
       privileged: true

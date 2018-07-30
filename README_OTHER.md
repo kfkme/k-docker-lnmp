@@ -6,10 +6,13 @@ docker stop 容器ID/Name
 ## 删除容器镜像
 ```
 # 删除所有容器
-docker rm `docker ps -a -q`
+sudo docker rm `docker ps -a -q`
 
 # 删除所有的镜像
-docker rmi $(docker images -q)
+sudo docker rmi $(docker images -q)
+
+# 删除docker-compose所有的镜像
+sudo docker-compose rm
 ```
 
 ## 配置XDebug

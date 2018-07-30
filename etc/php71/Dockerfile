@@ -2,6 +2,7 @@ FROM php:7.1.9-fpm
 
 # 安装基础
 RUN apt-get update \
+  && apt-get upgrade \
   && apt-get install -y --no-install-recommends \
     curl \
     iputils-ping \
@@ -19,6 +20,8 @@ RUN apt-get update \
     libjpeg62-turbo-dev \
     curl \
     git \
+    openssh-server \
+    openssh-client \
     subversion \
   && rm -rf /var/lib/apt/lists/*
 
@@ -125,6 +128,16 @@ RUN curl -sS https://getcomposer.org/installer | php -- \
 
 
 RUN chown -R www-data:www-data /var/www/
+
+
+# 用户公钥
+RUN ssh-keygen -t rsa -C 'kfkdock'
+
+# 部署公钥
+#RUN mkdir /var/www/.ssh
+#RUN chown -R www-data:www-data /var/www/.ssh/
+# RUN -Hu apache ssh-keygen -t rsa
+
 
 RUN mkdir -p $COMPOSER_HOME/cache
 
