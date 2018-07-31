@@ -22,6 +22,8 @@ RUN apt-get update \
     git \
     openssh-server \
     openssh-client \
+    sudo \
+    vim \
     subversion \
   && rm -rf /var/lib/apt/lists/*
 
@@ -134,10 +136,12 @@ RUN chown -R www-data:www-data /var/www/
 RUN ssh-keygen -t rsa -C 'kfkdock'
 
 # 部署公钥
-#RUN mkdir /var/www/.ssh
-#RUN chown -R www-data:www-data /var/www/.ssh/
-# RUN -Hu apache ssh-keygen -t rsa
+RUN mkdir /var/www/.ssh
+RUN chown -R www-data:www-data /var/www/.ssh/
+RUN -Hu www-data ssh-keygen -t rsa
 
+# coding webhook 日志
+RUN sudo -Hu www-data touch /var/www/localhost/hook/coding_webhook.log
 
 RUN mkdir -p $COMPOSER_HOME/cache
 

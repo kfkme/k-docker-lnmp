@@ -37,6 +37,7 @@ services:
         - ./www/:/var/www/
         - ./data/php71/user_key:/root/.ssh
         - ./data/php71/deploy_key:/var/www/.ssh
+        - ./logs/nginx/coding_webhook.log:/var/www/localhost/hook/coding_webhook.log
   php56:
       build: ./etc/php56
       privileged: true
