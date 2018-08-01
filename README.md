@@ -28,12 +28,12 @@
 ```
 
 
-###### 安装必要的工具
+###### 1. 安装必要的工具
 > [[Mac] docker/docker-compose/加速器](https://github.com/kfkme/kfkdock/blob/master/README_DEPEND_MAC.md)  
 > [[Linux ubuntu] docker/docker-compose/加速器](https://github.com/kfkme/kfkdock/blob/master/README_DEPEND_LINUX_UBUNTU.md)
 
 
-###### 1. 下载KFKDock源码 构建容器
+###### 2. 下载KFKDock源码 构建容器
 ```
 #进入用户目录
 cd ~/
@@ -50,7 +50,7 @@ sudo docker-compose build
 #启动容器
 sudo docker-compose up -d
 ```
-###### 2. 测试PHP代码
+###### 3. 测试PHP代码
 
 ```
 # 启动容器
@@ -58,14 +58,14 @@ cd ~/kfkdock
 sudo docker-compose up
 
 #修改PHP文件
-vi ~/kfkdock/www/index.php
+vi ~/kfkdock/www/localhost/index.php
 
 #地址栏访问 localhost
 http://localhost
 
 #完成！
 ```
-###### 3. 测试Laravel项目
+###### 4. 测试Laravel项目
 
 ```
 #编辑本地host文件
