@@ -6,7 +6,6 @@ RUN apt-get update \
   && apt-get install -y --no-install-recommends \
     curl \
     sudo \
-    vim \
     iputils-ping \
     libicu-dev \
     libmemcached-dev \
