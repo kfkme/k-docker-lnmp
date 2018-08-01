@@ -1,5 +1,5 @@
 FROM php:7.1.9-fpm
-#COPY ./sources.list /etc/apt/sources.list
+COPY ./sources.list /etc/apt/sources.list
 
 # 安装基础
 RUN apt-get update \
@@ -53,10 +53,10 @@ RUN docker-php-ext-configure bcmath --enable-bcmath \
   && docker-php-ext-enable opcache
 
 
-# AST
-RUN git clone https://github.com/nikic/php-ast /usr/src/php/ext/ast/ && \
-    docker-php-ext-configure ast && \
-    docker-php-ext-install ast
+## AST
+#RUN git clone https://github.com/nikic/php-ast /usr/src/php/ext/ast/ && \
+#    docker-php-ext-configure ast && \
+#    docker-php-ext-install ast
 
 
 # ICU - intl requirements for Symfony
