@@ -1,10 +1,11 @@
 FROM php:7.1.9-fpm
+#COPY ./sources.list /etc/apt/sources.list
 
 # 安装基础
 RUN apt-get update \
-  && apt-get upgrade \
   && apt-get install -y --no-install-recommends \
     curl \
+    sudo \
     iputils-ping \
     libicu-dev \
     libmemcached-dev \
@@ -18,14 +19,12 @@ RUN apt-get update \
     libxml2-dev \
     libbz2-dev \
     libjpeg62-turbo-dev \
-    curl \
     git \
     openssh-server \
     openssh-client \
     subversion \
   && rm -rf /var/lib/apt/lists/*
 
-#RUN apt-get install sudo
 
 # 安装PHP插件
 RUN docker-php-ext-configure bcmath --enable-bcmath \
