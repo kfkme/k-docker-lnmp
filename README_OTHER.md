@@ -6,7 +6,7 @@ docker stop 容器ID/Name
 ## 删除容器镜像
 ```
 # 删除所有容器
-sudo docker rm `docker ps -a -q`
+sudo docker rm `sudo docker ps -a -q`
 
 # 删除所有的镜像
 sudo docker rmi $(docker images -q)
