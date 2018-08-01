@@ -5,6 +5,8 @@ RUN apt-get update \
   && apt-get upgrade \
   && apt-get install -y --no-install-recommends \
     curl \
+    sudo \
+    vim \
     iputils-ping \
     libicu-dev \
     libmemcached-dev \
@@ -22,8 +24,6 @@ RUN apt-get update \
     git \
     openssh-server \
     openssh-client \
-    sudo \
-    vim \
     subversion \
   && rm -rf /var/lib/apt/lists/*
 
