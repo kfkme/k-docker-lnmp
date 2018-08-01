@@ -5,7 +5,6 @@ RUN apt-get update \
   && apt-get upgrade \
   && apt-get install -y --no-install-recommends \
     curl \
-    sudo \
     iputils-ping \
     libicu-dev \
     libmemcached-dev \
@@ -26,6 +25,7 @@ RUN apt-get update \
     subversion \
   && rm -rf /var/lib/apt/lists/*
 
+RUN apt-get install sudo
 
 # 安装PHP插件
 RUN docker-php-ext-configure bcmath --enable-bcmath \
