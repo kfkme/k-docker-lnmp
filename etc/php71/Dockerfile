@@ -25,7 +25,7 @@ RUN apt-get update \
     subversion \
   && rm -rf /var/lib/apt/lists/*
 
-RUN apt-get install sudo
+#RUN apt-get install sudo
 
 # 安装PHP插件
 RUN docker-php-ext-configure bcmath --enable-bcmath \
