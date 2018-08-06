@@ -126,23 +126,25 @@ RUN curl -sS https://getcomposer.org/installer | php -- \
     --install-dir=/usr/bin \
     --filename=composer
 
-
 RUN chown -R www-data:www-data /var/www/
 
-
 # 用户公钥
-RUN sudo ssh-keygen -t rsa -C "kfkdock" -f /root/.ssh/id_rsa
+
+RUN mkdir /root/.ssh \
+    && chown -R www-data:www-data /root/.ssh
+# RUN sudo ssh-keygen -t rsa -C "kfkdock"  -f ~/.ssh/id_dsa
+#RUN ssh-keygen -t rsa -C "kfkdock" -f /root/.ssh/id_rsa
+
 
 # 部署公钥
 RUN mkdir /var/www/.ssh \
     && chown -R www-data:www-data /var/www/.ssh
-
-RUN sudo -Hu www-data ssh-keygen -t rsa -f /var/www/.ssh/id_rsa
+#RUN sudo -Hu www-data ssh-keygen -t rsa  -f /var/www/.ssh/id_rsa
 
 # coding webhook 日志
-RUN mkdir /var/www/localhost /var/www/localhost/hook \
-    && chown -R www-data:www-data /var/www/localhost /var/www/localhost/hook \
-    && sudo -Hu www-data touch /var/www/localhost/hook/coding_webhook.log
+RUN mkdir /var/log/webhook \
+    && chown -R www-data:www-data /var/log/webhook \
+    && sudo -Hu www-data touch /var/log/webhook/coding_webhook.log
 
 RUN mkdir -p $COMPOSER_HOME/cache
 
