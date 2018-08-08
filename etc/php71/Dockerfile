@@ -121,11 +121,10 @@ COPY ./custom-php.ini /usr/local/etc/php/conf.d/custom-php.ini
 
 # Composer
 ENV COMPOSER_HOME /var/www/.composer
-RUN composer config -g repo.packagist composer https://packagist.laravel-china.org
-
 RUN curl -sS https://getcomposer.org/installer | php -- \
     --install-dir=/usr/bin \
     --filename=composer
+RUN composer config -g repo.packagist composer https://packagist.laravel-china.org
 
 RUN chown -R www-data:www-data /var/www/
 
