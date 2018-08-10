@@ -29,8 +29,8 @@
 
 
 ###### 1. 安装必要的工具
-> [[Mac] docker/docker-compose/加速器](https://github.com/kfkme/kfkdock/blob/master/README_DEPEND_MAC.md)  
-> [[Linux ubuntu] docker/docker-compose/加速器](https://github.com/kfkme/kfkdock/blob/master/README_DEPEND_LINUX_UBUNTU.md)
+> [[Mac] docker/docker-compose/加速器](https://github.com/kfkme/kfkdock/blob/master/etc/orther/README_DEPEND_MAC.md)  
+> [[Linux ubuntu] docker/docker-compose/加速器](https://github.com/kfkme/kfkdock/blob/master/etc/orther/README_DEPEND_LINUX_UBUNTU.md)
 
 
 ###### 2. 下载KFKDock源码 构建容器
@@ -127,7 +127,7 @@ DB_PASSWORD=kfkdock
 ```
 
 ###### 其他
-> [删除容器镜像/配置XDebug/docker-compose.yml语法解释/Dockerfile语法解释](https://github.com/kfkme/kfkdock/blob/master/README_OTHER.md)
+> [删除容器镜像/配置XDebug/docker-compose.yml语法解释/Dockerfile语法解释](https://github.com/kfkme/kfkdock/blob/master/etc/orther/README_OTHER.md)
 
 ###### QQ交流群
 
