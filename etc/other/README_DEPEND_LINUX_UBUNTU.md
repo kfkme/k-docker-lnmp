@@ -28,4 +28,4 @@ curl -sSL https://get.daocloud.io/daotools/set_mirror.sh | sh -s http://33b39435
 service docker restart
 ```
 
-#### [返回](https://github.com/kfkme/kfkdock/blob/master/README.md#%E6%9E%84%E5%BB%BA)
+#### [返回](https://github.com/kfkme/kfkdock/blob/master/README.md#1-%E5%AE%89%E8%A3%85%E5%BF%85%E8%A6%81%E7%9A%84%E5%B7%A5%E5%85%B7)
