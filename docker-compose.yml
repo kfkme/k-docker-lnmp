@@ -108,3 +108,11 @@ services:
         - "27017:27017"
       volumes:
         - ./data/mongo:/data/db
+
+### Node Container #############################
+
+  node:
+      build: ./etc/node
+      privileged: true
+      ports:
+        - "8080:8080"

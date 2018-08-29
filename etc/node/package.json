@@ -1,0 +1,22 @@
+{
+  "name": "website",
+  "version": "1.0.0",
+  "description": "Dockerfiles for Node.js Web Apps",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.16.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/praveenweb/node-docker"
+  },
+  "keywords": [
+    "dockerfile",
+    "nodejs"
+  ],
+  "author": "praveen@hasura.io",
+  "license": "ISC"
+}

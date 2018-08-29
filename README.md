@@ -9,9 +9,9 @@
 > [使用KFKDock搭建PHP项目环境](https://www.bilibili.com/video/av13901414/)
 
 ###### 包含的软件
-- [x] PHP5.6/7.1
+- [x] PHP
 - [x] Nginx
-- [x] Mysql5.6/5.7（默认密码:kfkdock）
+- [x] Mysql（默认密码:kfkdock）
 - [x] MongoDB
 - [x] Redis
 - [x] Memcached
@@ -113,6 +113,11 @@ docker-compose restart
 http://laravel.cc
 
 #成功！
+```
+
+###### 进入前端容器
+```
+docker-compose exec node sh
 ```
 
 ###### 数据库配置

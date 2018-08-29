@@ -1,5 +1,28 @@
 FROM php:7.1.9-fpm
-COPY ./sources.list /etc/apt/sources.list
+#COPY ../sources.list /etc/apt/sources.list
+
+
+
+RUN echo "deb http://mirrors.aliyun.com/debian/ stretch main non-free contrib" > /etc/apt/sources.list \
+    && echo "deb-src http://mirrors.aliyun.com/debian/ stretch main non-free contrib" >> /etc/apt/sources.list \
+    && echo "deb http://mirrors.aliyun.com/debian-security stretch/updates main" >> /etc/apt/sources.list \
+    && echo "deb-src http://mirrors.aliyun.com/debian-security stretch/updates main" >> /etc/apt/sources.list \
+    && echo "deb http://mirrors.aliyun.com/debian/ stretch-updates main non-free contrib" >> /etc/apt/sources.list \
+    && echo "deb-src http://mirrors.aliyun.com/debian/ stretch-updates main non-free contrib" >> /etc/apt/sources.list \
+    && echo "deb http://mirrors.aliyun.com/debian/ stretch-backports main non-free contrib" >> /etc/apt/sources.list \
+    && echo "deb-src http://mirrors.aliyun.com/debian/ stretch-backports main non-free contrib" >> /etc/apt/sources.list
+
+#
+#FROM kalilinux/kali MAINTAINER steev@kali.org
+#RUN echo "deb http://http.kali.org/kali kali main contrib non-free" > /etc/apt/sources.list
+#&& \ echo "deb-src http://http.kali.org/kali kali main contrib non-free" >> /etc/apt/sources.list
+#&& \ echo "deb http://security.kali.org/kali-security kali/updates main contrib non-free" >> /etc/apt/sources.list
+#&& \ echo "deb-src http://security.kali.org/kali-security kali/updates main contrib non-free" >> /etc/apt/sources.list
+#ENV DEBIAN_FRONTEND noninteractive
+#RUN apt-get -y update && apt-get -y dist-upgrade && apt-get clean
+#
+
+
 
 # 安装基础
 RUN apt-get update \
@@ -53,6 +76,7 @@ RUN docker-php-ext-configure bcmath --enable-bcmath \
   && docker-php-ext-enable opcache
 
 
+
 ## AST
 #RUN git clone https://github.com/nikic/php-ast /usr/src/php/ext/ast/ && \
 #    docker-php-ext-configure ast && \
@@ -90,6 +114,12 @@ RUN curl -L -o /tmp/memcached.tar.gz "https://github.com/php-memcached-dev/php-m
   && rm -r memcached \
   && rm /tmp/memcached.tar.gz \
   && docker-php-ext-enable memcached
+
+
+# 安装 PHP MongoDB 扩展
+RUN pecl install mongodb && \
+    docker-php-ext-enable mongodb
+
 
 # 复制 opcache 配置
 COPY ./opcache.ini /usr/local/etc/php/conf.d/opcache.ini
