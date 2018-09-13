@@ -43,6 +43,7 @@ RUN apt-get update \
     libbz2-dev \
     libjpeg62-turbo-dev \
     git \
+    vim \
     openssh-server \
     openssh-client \
     subversion \
