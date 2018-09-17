@@ -4,12 +4,12 @@
 
 ## 目录
 - [此项目能做什么](https://github.com/kfkme/kfkdock#此项目能做什么)
-- [GItHub地址、视频教程](https://github.com/kfkme/kfkdock#GItHub地址、视频教程)
+- [GItHub地址、视频教程](https://github.com/kfkme/kfkdock#github地址、视频教程)
 - [包含软件](https://github.com/kfkme/kfkdock#包含软件)
 - [项目目录结构](https://github.com/kfkme/kfkdock#项目目录结构)
-- [快速运行KFKDock](https://github.com/kfkme/kfkdock#快速运行KFKDock)
-    - [运行PHP服务](https://github.com/kfkme/kfkdock#运行PHP服务)
-    - [运行Laravel项目](https://github.com/kfkme/kfkdock#运行Laravel项目)
+- [快速运行KFKDock](https://github.com/kfkme/kfkdock#快速运行kfkdock)
+    - [运行PHP服务](https://github.com/kfkme/kfkdock#运行php服务)
+    - [运行Laravel项目](https://github.com/kfkme/kfkdock#运行laravel项目)
     - [运行前端服务](https://github.com/kfkme/kfkdock#运行前端服务)
 
 ## 此项目能做什么
