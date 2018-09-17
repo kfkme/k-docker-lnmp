@@ -1,22 +1,29 @@
 
-## KFKDock
-> Docker容器化应用，根据自定义配置文件快速搭建PHP环境。简化一步步手动配置服务器的过程。
+# 基于Docker快速搭建Web服务
+根据自定义配置文件快速搭建Web环境。
 
-###### GitHub地址
-> [https://github.com/kfkme/kfkdock](https://github.com/kfkme/kfkdock)
+## 目录
+- [此项目能做什么](https://github.com/kfkme/kfkdock#此项目能做什么)
+- [GItHub地址、视频教程](https://github.com/kfkme/kfkdock#GItHub地址、视频教程)
+- [包含软件](https://github.com/kfkme/kfkdock#包含软件)
+- [项目目录结构](https://github.com/kfkme/kfkdock#项目目录结构)
+- [快速运行KFKDock](https://github.com/kfkme/kfkdock#快速运行KFKDock)
+    - [运行PHP服务](https://github.com/kfkme/kfkdock#运行PHP服务)
+    - [运行Laravel项目](https://github.com/kfkme/kfkdock#运行Laravel项目)
+    - [运行前端服务](https://github.com/kfkme/kfkdock#运行前端服务)
 
-###### 视频教程  
-> [使用KFKDock搭建PHP项目环境](https://www.bilibili.com/video/av13901414/)
+## 此项目能做什么
+1. 搭建PHP开发/生产环境。
+2. 搭建Node开发/生产环境。
+    
+## GItHub地址、视频教程
+> [GitHub地址](https://github.com/kfkme/kfkdock)
+> [视频教程](https://www.bilibili.com/video/av13901414/)
 
-###### 包含的软件
-- [x] PHP
-- [x] Nginx
-- [x] Mysql（默认密码:kfkdock）
-- [x] MongoDB
-- [x] Redis
-- [x] Memcached
+## 包含软件
+PHP / Nginx / MySQL / MongoDB / Redis / Memcached
 
-###### 目录结构
+## 项目目录结构
 ```
 /kfkdock
     /data                   数据库数据（mysql,redis,mongo）
@@ -27,7 +34,8 @@
     /docker-compose.yml     docker-compose配置文件
 ```
 
-
+## 快速运行KFKDock
+### 运行PHP服务
 ###### 1. 安装必要的工具
 > [[Mac] docker/docker-compose/加速器](https://github.com/kfkme/kfkdock/blob/master/etc/other/README_DEPEND_MAC.md)  
 > [[Linux ubuntu] docker/docker-compose/加速器](https://github.com/kfkme/kfkdock/blob/master/etc/other/README_DEPEND_LINUX_UBUNTU.md)
@@ -65,6 +73,8 @@ http://localhost
 
 #完成！
 ```
+
+### 运行Laravel项目
 ###### 4. 测试Laravel项目
 
 ```
@@ -114,11 +124,7 @@ http://laravel.cc
 
 #成功！
 ```
-
-###### 进入前端容器
-```
-docker-compose exec node sh
-```
+### 运行前端服务
 
 ###### 数据库配置
 
@@ -129,6 +135,12 @@ DB_PORT=3306
 DB_DATABASE=shop
 DB_USERNAME=root
 DB_PASSWORD=kfkdock
+```
+
+### 运行前端服务
+###### 进入前端容器
+```
+docker-compose exec node sh
 ```
 
 ###### 其他
