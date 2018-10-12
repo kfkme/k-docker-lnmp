@@ -1,4 +1,4 @@
 *
 !.gitignore
+!a-localhost.conf
 !laravel.cc.conf
-!default.cc.conf
