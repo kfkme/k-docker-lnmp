@@ -118,8 +118,8 @@ RUN curl -L -o /tmp/memcached.tar.gz "https://github.com/php-memcached-dev/php-m
 
 
 # 安装 PHP MongoDB 扩展
-RUN pecl install mongodb && \
-    docker-php-ext-enable mongodb
+#RUN pecl install mongodb && \
+#    docker-php-ext-enable mongodb
 
 
 # 复制 opcache 配置
