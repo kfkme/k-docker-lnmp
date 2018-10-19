@@ -1,7 +1,4 @@
 FROM php:7.1.9-fpm
-#COPY ../sources.list /etc/apt/sources.list
-
-
 
 RUN echo "deb http://mirrors.aliyun.com/debian/ stretch main non-free contrib" > /etc/apt/sources.list \
     && echo "deb-src http://mirrors.aliyun.com/debian/ stretch main non-free contrib" >> /etc/apt/sources.list \
@@ -11,18 +8,6 @@ RUN echo "deb http://mirrors.aliyun.com/debian/ stretch main non-free contrib" >
     && echo "deb-src http://mirrors.aliyun.com/debian/ stretch-updates main non-free contrib" >> /etc/apt/sources.list \
     && echo "deb http://mirrors.aliyun.com/debian/ stretch-backports main non-free contrib" >> /etc/apt/sources.list \
     && echo "deb-src http://mirrors.aliyun.com/debian/ stretch-backports main non-free contrib" >> /etc/apt/sources.list
-
-#
-#FROM kalilinux/kali MAINTAINER steev@kali.org
-#RUN echo "deb http://http.kali.org/kali kali main contrib non-free" > /etc/apt/sources.list
-#&& \ echo "deb-src http://http.kali.org/kali kali main contrib non-free" >> /etc/apt/sources.list
-#&& \ echo "deb http://security.kali.org/kali-security kali/updates main contrib non-free" >> /etc/apt/sources.list
-#&& \ echo "deb-src http://security.kali.org/kali-security kali/updates main contrib non-free" >> /etc/apt/sources.list
-#ENV DEBIAN_FRONTEND noninteractive
-#RUN apt-get -y update && apt-get -y dist-upgrade && apt-get clean
-#
-
-
 
 # 安装基础
 RUN apt-get update \
@@ -48,7 +33,6 @@ RUN apt-get update \
     openssh-client \
     subversion \
   && rm -rf /var/lib/apt/lists/*
-
 
 # 安装PHP插件
 RUN docker-php-ext-configure bcmath --enable-bcmath \
@@ -76,25 +60,22 @@ RUN docker-php-ext-configure bcmath --enable-bcmath \
   && docker-php-ext-install opcache \
   && docker-php-ext-enable opcache
 
-
-
 ## AST
 #RUN git clone https://github.com/nikic/php-ast /usr/src/php/ext/ast/ && \
 #    docker-php-ext-configure ast && \
 #    docker-php-ext-install ast
 
-
 # ICU - intl requirements for Symfony
 # Debian is out of date, and Symfony expects the latest - so build from source, unless a better alternative exists(?)
-RUN curl -sS -o /tmp/icu.tar.gz -L http://download.icu-project.org/files/icu4c/58.2/icu4c-58_2-src.tgz \
-    && tar -zxf /tmp/icu.tar.gz -C /tmp \
-    && cd /tmp/icu/source \
-    && ./configure --prefix=/usr/local \
-    && make \
-    && make install
+#RUN curl -sS -o /tmp/icu.tar.gz -L http://download.icu-project.org/files/icu4c/58.2/icu4c-58_2-src.tgz \
+#    && tar -zxf /tmp/icu.tar.gz -C /tmp \
+#    && cd /tmp/icu/source \
+#    && ./configure --prefix=/usr/local \
+#    && make \
+#    && make install
 
-RUN docker-php-ext-configure intl --with-icu-dir=/usr/local \
-    && docker-php-ext-install intl
+#RUN docker-php-ext-configure intl --with-icu-dir=/usr/local \
+#    && docker-php-ext-install intl
 
 # 安装 Redis 扩展
 COPY ./redis-3.1.3.tgz /home/redis.tgz
