@@ -1,4 +1,4 @@
-FROM nginx:1.12.1
+FROM nginx:1.14
 
 # 更改权限
 RUN mkdir /var/www \
