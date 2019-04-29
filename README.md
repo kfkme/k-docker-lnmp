@@ -1,13 +1,12 @@
 
-# [基于Docker快速搭建Web服务](https://github.com/kfkme/kfkdock)
-根据自定义配置文件快速搭建Web环境。
-使用Docker搭建PHP开发/生产环境。
+# 基于Docker快速搭建Web服务
+根据自定义配置文件快速搭建Web环境。包含软件：PHP / Nginx / MySQL / MongoDB / Redis / Memcached
+
+
  
  视频教程：
  [视频教程](https://www.bilibili.com/video/av13901414/)
 
-包含软件：
-PHP / Nginx / MySQL / MongoDB / Redis / Memcached
 
 目录结构：
 ```
@@ -129,6 +128,8 @@ docker-compose exec node sh
 > 群号: 259937756 <a target="_blank" href="https://shang.qq.com/wpa/qunwpa?idkey=a593151f7e27a4cb7041db186f09f9727d6af2184737637d52f23d2431372065"><img border="0" src="https://pub.idqqimg.com/wpa/images/group.png" alt="KFKDock" title="KFKDock"></a>
 
 ![群号: 259937756](http://ww1.sinaimg.cn/large/750f80a1ly1fp2b1kky0qj208e08e747.jpg)
+###### GitHub地址 
+[https://github.com/kfkme/kfkdock](https://github.com/kfkme/kfkdock)
 
 ###### 参考
 - [docker-lnmp](https://github.com/beautysoft/docker-lnmp)
