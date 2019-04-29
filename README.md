@@ -1,10 +1,7 @@
 
-# 基于Docker快速搭建Web服务
+# [基于Docker快速搭建Web服务](https://github.com/kfkme/kfkdock)
 根据自定义配置文件快速搭建Web环境。
 使用Docker搭建PHP开发/生产环境。
-    
-GItHub地址：
- [GitHub地址](https://github.com/kfkme/kfkdock)
  
  视频教程：
  [视频教程](https://www.bilibili.com/video/av13901414/)
