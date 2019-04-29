@@ -13,8 +13,7 @@
     - [运行前端服务](https://github.com/kfkme/kfkdock#运行前端服务)
 
 ## 此项目能做什么
-1. 搭建PHP开发/生产环境。
-2. 搭建Node开发/生产环境。
+使用Docker搭建PHP开发/生产环境。
     
 ## GItHub地址、视频教程
 > [GitHub地址](https://github.com/kfkme/kfkdock)
@@ -25,13 +24,16 @@ PHP / Nginx / MySQL / MongoDB / Redis / Memcached
 
 ## 项目目录结构
 ```
-/kfkdock
-    /data                   数据库数据（mysql,redis,mongo）
-    /etc                    应用配置项
-    /logs                   各种日志（mysql,nginx,php）
-    /vhost                  虚拟主机配置
-    /www                    项目目录
-    /docker-compose.yml     docker-compose配置文件
+build                   应用
+data                    数据库数据存放路径（mysql,redis,mongo）
+logs                    日志存放路径（mysql,nginx,php）
+shell                   常用shell存放路径
+ssh-key                 SSH Key
+ssl-key                 SSL Key存放路径（用于HTTPS协议）
+vhost                   虚拟主机配置
+www                     项目目录
+docker-compose.yml      docker-compose配置文件
+env-example             存储一些依赖环境的变量的文件
 ```
 
 ## 快速运行KFKDock
@@ -51,6 +53,9 @@ git clone https://github.com/kfkme/kfkdock.git
 
 #进入目录
 cd kfkdock
+
+# 拷贝 配置环境变量文件
+cp env-example .env
 
 #构建容器
 sudo docker-compose build
