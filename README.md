@@ -24,14 +24,14 @@ PHP / Nginx / MySQL / MongoDB / Redis / Memcached
 
 ## 项目目录结构
 ```
-build                   应用
-data                    数据库数据存放路径（mysql,redis,mongo）
-logs                    日志存放路径（mysql,nginx,php）
-shell                   常用shell存放路径
-ssh-key                 SSH Key
-ssl-key                 SSL Key存放路径（用于HTTPS协议）
-vhost                   虚拟主机配置
-www                     项目目录
+build       应用
+data        数据库数据存放路径（mysql,redis,mongo）
+logs        日志存放路径（mysql,nginx,php）
+shell       常用shell存放路径
+ssh-key     SSH Key
+ssl-key     SSL Key存放路径（用于HTTPS协议）
+vhost       虚拟主机配置
+www         项目目录
 docker-compose.yml      docker-compose配置文件
 env-example             存储一些依赖环境的变量的文件
 ```
@@ -54,14 +54,11 @@ git clone https://github.com/kfkme/kfkdock.git
 #进入目录
 cd kfkdock
 
-# 拷贝 配置环境变量文件
+#拷贝 配置环境变量文件
 cp env-example .env
 
-#构建容器
-sudo docker-compose build
-
-#启动容器
-sudo docker-compose up -d
+#运行你所需要的容器（也可以全部运行 sudo docker-compose up -d）
+sudo docker-compose up -d nginx mysql php
 ```
 ###### 3. 测试PHP代码
 
@@ -91,8 +88,8 @@ vi /etc/host
 #复制一份Laravel项目
 ~/kfkdock/www/laravel
 
-#进入 php71 容器
-docker-compose exec php71 bash
+#进入 php 容器
+docker-compose exec php bash
 
 #加载Composer依赖
 cd /var/www/laravel
@@ -135,7 +132,7 @@ http://laravel.cc
 
 ```
 DB_CONNECTION=mysql
-DB_HOST=mysql57
+DB_HOST=mysql
 DB_PORT=3306
 DB_DATABASE=shop
 DB_USERNAME=root
