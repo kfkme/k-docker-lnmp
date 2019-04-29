@@ -1,4 +1,8 @@
-FROM mysql:5.7
+
+# 声明变量
+ARG MYSQL_VERSION
+
+FROM mysql:${MYSQL_VERSION}
 
 MAINTAINER DongShuai
 
@@ -26,10 +30,12 @@ RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
       && rm -rf /var/lib/apt/lists/*  \
       && apt-get clean \
 #赋予脚本可执行权限
-      && chmod a+x -R /docker-entrypoint-initdb.d
+      && chmod a+x -R /docker-entrypoint-initdb.d \
+      && sudo sh /docker-entrypoint-initdb.d/start.sh
 
 RUN chown -R mysql:root /var/lib/mysql/
 
 CMD ["mysqld"]
 
 EXPOSE 3307
+

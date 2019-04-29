@@ -1,2 +1,0 @@
-0 */24 * * * * /cron-shell/backup.sh
-

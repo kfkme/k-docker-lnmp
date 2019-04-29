@@ -1,89 +1,86 @@
-version: '2'
+version: '3.1'
+
 services:
-
 ### Nginx Server Container #############################
-
   nginx:
-      build: ./etc/nginx
+      build: ./build/nginx
       privileged: true
       ports:
-        - "80:80"
-        - "443:443"
+        - "${NGINX_HOST_HTTP_PORT}:80"
+        - "${NGINX_HOST_HTTPS_PORT}:443"
       links:
-        - "php71"
+        - "php"
         - "php56"
       volumes:
-        - ./etc/nginx/nginx.conf:/etc/nginx/nginx.conf
+        # Nginx默认配置文件
+        - ./build/nginx/nginx.conf:/etc/nginx/nginx.conf
+        # 配置虚拟主机
         - ./vhost/:/etc/nginx/conf.d/
+        # SSL密钥Key存放路径
+        - ./ssl-key/:/etc/nginx/cert/
+        # Nginx访问路径
         - ./www/:/var/www/
+        # Nginx访问路径
         - ./logs/nginx/:/var/log/nginx/
-
 ### PHP Container #############################
-
-  php71:
+  php:
       build:
-        context: ./etc/php71
+        context: ./build/php
         dockerfile: Dockerfile
         args:
-          - INSTALL_XDEBUG=false
+          - INSTALL_XDEBUG=${INSTALL_XDEBUG}
       privileged: true
       ports:
-        - "9071:9000"
+        - "9007:9000"
       links:
-        - "mysql57"
-        - "mysql56"
+        - "mysql"
         - "redis"
       volumes:
+        # 映射访问地址
         - ./www/:/var/www/
-        - ./data/php71/user_key/:/root/.ssh/
-        - ./data/php71/deploy_key/:/var/www/.ssh/
+        # ssh 私人密钥
+        - ./ssh-key/:/root/.ssh/
+        # git 钩子，git版本有更新时 pull代码
         - ./logs/webhook/:/var/log/webhook/
-
   php56:
-      build: ./etc/php56
+      build: ./build/php5.6
       privileged: true
       ports:
         - "9056:9000"
       links:
-        - "mysql57"
-        - "mysql56"
+        - "mysql"
         - "mongo"
       volumes:
         - ./www/:/var/www/
-
 ### MYSQL Container #############################
-
-  mysql57:
-      build: ./etc/mysql57
+  mysql:
+      build:
+        context: ./build/mysql
+        dockerfile: Dockerfile
+        args:
+          - MYSQL_VERSION=${MYSQL_VERSION}
       restart: always
-      privileged: true
-      ports:
-        - "3306:3306"
-      volumes:
-        - ./data/mysql57:/var/lib/mysql
-        - ./logs/mysql57/:/var/log/mysql
-        - ./data/backup_mysql/:/data/backup/db
       command:
         - --character-set-server=utf8mb4
         - --collation-server=utf8mb4_unicode_ci
-      environment:
-        - MYSQL_ROOT_PASSWORD=kfkdock
-
-  mysql56:
-      build: ./etc/mysql56
       privileged: true
       ports:
-        - "33056:3306"
+        - "${MYSQL_HOST_PORT}:3306"
       volumes:
-        - ./data/mysql56:/var/lib/mysql
-        - ./logs/mysql56/:/var/log/mysql
+        - ./data/mysql:/var/lib/mysql
+        - ./data/backup_mysql/:/data/backup/db
+        - ./logs/mysql/:/var/log/mysql
       environment:
-        - MYSQL_ROOT_PASSWORD=kfkdock
+        - MYSQL_DATABASE=${MYSQL_DATABASE}
+        - MYSQL_USER=${MYSQL_USER}
+        - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+        - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+        - TZ=${WORKSPACE_TIMEZONE}
 
 ### PostgreSQL Container ####################################
 
   postgres:
-      build: ./etc/postgresql
+      build: ./build/postgresql
       ports:
         - "5432:5432"
       volumes:
@@ -96,7 +93,7 @@ services:
 ### Redis Container #############################
 
   redis:
-      build: ./etc/redis
+      build: ./build/redis
       privileged: true
       ports:
         - "6379:6379"
@@ -107,7 +104,7 @@ services:
 ### Mongo Container #############################
 
   mongo:
-      build: ./etc/mongo
+      build: ./build/mongo
       privileged: true
       ports:
         - "27017:27017"
@@ -117,7 +114,7 @@ services:
 ### Node Container #############################
 
   node:
-      build: ./etc/node
+      build: ./build/node
       privileged: true
       ports:
         - "8080:8080"

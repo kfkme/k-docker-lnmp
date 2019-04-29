@@ -1,3 +1,9 @@
+# 声明变量
+ARG INSTALL_XDEBUG
+
+
+
+
 FROM php:7.1.9-fpm
 
 RUN echo "deb http://mirrors.aliyun.com/debian/ stretch main non-free contrib" > /etc/apt/sources.list \
@@ -108,7 +114,6 @@ COPY ./opcache.ini /usr/local/etc/php/conf.d/opcache.ini
 
 
 # 安装xDebug,如果启用
-ARG INSTALL_XDEBUG=false
 RUN if [ ${INSTALL_XDEBUG} = true ]; then \
     # 安装xdebug扩展
     pecl install xdebug && \

@@ -1,16 +1,24 @@
 
-### 应用路径 #############################
-# 注意如果设置开机启动（rc.local）这里必须指定绝对路径，这是因为 rc.local 是用 root 运行的
-# 默认你把 kfkdock 放到了 ~/ 目录
-APP_PATH=~/kfkdock/
+# WORKSPACE
+WORKSPACE_TIMEZONE=UTC
 
-### Data Path ##########################################################################################################
-DATA_SAVE_PATH=./data
 
-### Docker Host IP #####################################################################################################
-DOCKER_HOST_IP=10.0.75.1
 
-### NGINX ##############################################################################################################
+# 本地代码地址
+APP_CODE_PATH_HOST=./www
+# 容器代码地址
+APP_CODE_PATH_CONTAINER=/var/www
+# 挂载卷驱动
+VOLUMES_DRIVER=local
+DATA_PATH_HOST=~/kfkdock/data
+# 网络驱动
+NETWORKS_DRIVER=bridge
+# PHP版本
+PHP_VERSION=7.1
+# 是否开启XDebug组件
+INSTALL_XDEBUG=false
+
+# Nginx 配置
 NGINX_HOST_HTTP_PORT=80
 NGINX_HOST_HTTPS_PORT=443
 NGINX_HOST_LOG_PATH=./logs/nginx/
@@ -18,22 +26,23 @@ NGINX_SITES_PATH=./nginx/sites/
 NGINX_PHP_UPSTREAM_CONTAINER=php-fpm
 NGINX_PHP_UPSTREAM_PORT=9000
 
-### MYSQL ##############################################################################################################
-MYSQL_VERSION=8.0
+# redis 配置
+REDIS_HOST_PORT=63790
+REDIS_SET_PASSWORD=kfkdock
+
+# mysql 配置
+# 可选版本参考: https://hub.docker.com/_/mysql/
+MYSQL_VERSION=5.7
+MYSQL_HOST_PORT=3306
+MYSQL_ROOT_PASSWORD=kfkdock
 MYSQL_DATABASE=default
-MYSQL_USER=default
+MYSQL_USER=kfk
 MYSQL_PASSWORD=kfkdock
-MYSQL_PORT=3306
-MYSQL_ROOT_PASSWORD=root
 MYSQL_ENTRYPOINT_INITDB=./mysql/docker-entrypoint-initdb.d
 
-### REDIS ##############################################################################################################
-REDIS_PORT=6379
-
-### POSTGRES ###########################################################################################################
-POSTGRES_DB=default
-POSTGRES_USER=default
-POSTGRES_PASSWORD=secret
-POSTGRES_PORT=5432
-
-########################################################################################################################
+# rabbitmq 配置
+RABBITMQ_NODE_HOST_PORT=5672
+RABBITMQ_MANAGEMENT_HTTP_HOST_PORT=15672
+RABBITMQ_MANAGEMENT_HTTPS_HOST_PORT=15671
+RABBITMQ_DEFAULT_USER=guest
+RABBITMQ_DEFAULT_PASS=guest
