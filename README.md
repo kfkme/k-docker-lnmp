@@ -29,8 +29,11 @@ env-example             存储一些依赖环境的变量的文件
 ## 快速开始
 
 ###### 1. 安装必要的工具
- [[Mac] docker/docker-compose/加速器](https://github.com/kfkme/kfkdock/blob/master/build/other/README_DEPEND_MAC.md)  
- [[Linux ubuntu] docker/docker-compose/加速器](https://github.com/kfkme/kfkdock/blob/master/build/other/README_DEPEND_LINUX_UBUNTU.md)
+Mac  
+[安装Docker、安装docker-compose、配置Docker加速器](https://github.com/kfkme/kfkdock/blob/master/build/other/README_DEPEND_MAC.md)  
+
+Linux ubuntu  
+[安装Docker、安装docker-compose、配置Docker加速器](https://github.com/kfkme/kfkdock/blob/master/build/other/README_DEPEND_LINUX_UBUNTU.md)
 
 
 ###### 2. 下载KFKDock源码 构建容器
