@@ -1,28 +1,18 @@
 
 # 基于Docker快速搭建Web服务
 根据自定义配置文件快速搭建Web环境。
-
-## 目录
-- [此项目能做什么](https://github.com/kfkme/kfkdock#此项目能做什么)
-- [GItHub地址、视频教程](https://github.com/kfkme/kfkdock#github地址、视频教程)
-- [包含软件](https://github.com/kfkme/kfkdock#包含软件)
-- [项目目录结构](https://github.com/kfkme/kfkdock#项目目录结构)
-- [快速运行KFKDock](https://github.com/kfkme/kfkdock#快速运行kfkdock)
-    - [运行PHP服务](https://github.com/kfkme/kfkdock#运行php服务)
-    - [运行Laravel项目](https://github.com/kfkme/kfkdock#运行laravel项目)
-    - [运行前端服务](https://github.com/kfkme/kfkdock#运行前端服务)
-
-## 此项目能做什么
 使用Docker搭建PHP开发/生产环境。
     
-## GItHub地址、视频教程
-> [GitHub地址](https://github.com/kfkme/kfkdock)
-> [视频教程](https://www.bilibili.com/video/av13901414/)
+GItHub地址：
+ [GitHub地址](https://github.com/kfkme/kfkdock)
+ 
+ 视频教程：
+ [视频教程](https://www.bilibili.com/video/av13901414/)
 
-## 包含软件
+包含软件：
 PHP / Nginx / MySQL / MongoDB / Redis / Memcached
 
-## 项目目录结构
+目录结构：
 ```
 build       应用
 data        数据库数据存放路径（mysql,redis,mongo）
@@ -36,8 +26,8 @@ docker-compose.yml      docker-compose配置文件
 env-example             存储一些依赖环境的变量的文件
 ```
 
-## 快速运行KFKDock
-### 运行PHP服务
+## 快速开始
+
 ###### 1. 安装必要的工具
 > [[Mac] docker/docker-compose/加速器](https://github.com/kfkme/kfkdock/blob/master/build/other/README_DEPEND_MAC.md)  
 > [[Linux ubuntu] docker/docker-compose/加速器](https://github.com/kfkme/kfkdock/blob/master/build/other/README_DEPEND_LINUX_UBUNTU.md)
@@ -76,7 +66,6 @@ http://localhost
 #完成！
 ```
 
-### 运行Laravel项目
 ###### 4. 测试Laravel项目
 
 ```
@@ -126,27 +115,14 @@ http://laravel.cc
 
 #成功！
 ```
-### 运行前端服务
 
-###### 数据库配置
-
-```
-DB_CONNECTION=mysql
-DB_HOST=mysql
-DB_PORT=3306
-DB_DATABASE=shop
-DB_USERNAME=root
-DB_PASSWORD=kfkdock
-```
-
-### 运行前端服务
 ###### 进入前端容器
 ```
 docker-compose exec node sh
 ```
 
-###### 其他
-> [删除容器镜像/配置XDebug/docker-compose.yml语法解释/Dockerfile语法解释](https://github.com/kfkme/kfkdock/blob/master/build/other/README_OTHER.md)
+###### 其他：
+ [删除容器镜像、配置XDebug、docker-compose.yml语法解释、Dockerfile语法解释](https://github.com/kfkme/kfkdock/blob/master/build/other/README_OTHER.md)
 
 ###### QQ交流群
 
