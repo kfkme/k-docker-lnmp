@@ -39,8 +39,8 @@ env-example             存储一些依赖环境的变量的文件
 ## 快速运行KFKDock
 ### 运行PHP服务
 ###### 1. 安装必要的工具
-> [[Mac] docker/docker-compose/加速器](https://github.com/kfkme/kfkdock/blob/master/etc/other/README_DEPEND_MAC.md)  
-> [[Linux ubuntu] docker/docker-compose/加速器](https://github.com/kfkme/kfkdock/blob/master/etc/other/README_DEPEND_LINUX_UBUNTU.md)
+> [[Mac] docker/docker-compose/加速器](https://github.com/kfkme/kfkdock/blob/master/build/other/README_DEPEND_MAC.md)  
+> [[Linux ubuntu] docker/docker-compose/加速器](https://github.com/kfkme/kfkdock/blob/master/build/other/README_DEPEND_LINUX_UBUNTU.md)
 
 
 ###### 2. 下载KFKDock源码 构建容器
@@ -81,7 +81,7 @@ http://localhost
 
 ```
 #编辑本地host文件
-vi /etc/host
+vi /build/host
 #加入
 127.0.0.1   laravel.cc
 
@@ -146,7 +146,7 @@ docker-compose exec node sh
 ```
 
 ###### 其他
-> [删除容器镜像/配置XDebug/docker-compose.yml语法解释/Dockerfile语法解释](https://github.com/kfkme/kfkdock/blob/master/etc/other/README_OTHER.md)
+> [删除容器镜像/配置XDebug/docker-compose.yml语法解释/Dockerfile语法解释](https://github.com/kfkme/kfkdock/blob/master/build/other/README_OTHER.md)
 
 ###### QQ交流群
 
