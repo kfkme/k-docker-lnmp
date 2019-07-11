@@ -2,8 +2,6 @@
 # WORKSPACE
 WORKSPACE_TIMEZONE=UTC
 
-
-
 # 本地代码地址
 APP_CODE_PATH_HOST=./www
 # 容器代码地址
@@ -14,7 +12,7 @@ DATA_PATH_HOST=~/kfkdock/data
 # 网络驱动
 NETWORKS_DRIVER=bridge
 # PHP版本
-PHP_VERSION=7.1
+PHP_VERSION=7.2.9
 # 是否开启XDebug组件
 INSTALL_XDEBUG=false
 
@@ -25,6 +23,7 @@ NGINX_HOST_LOG_PATH=./logs/nginx/
 NGINX_SITES_PATH=./nginx/sites/
 NGINX_PHP_UPSTREAM_CONTAINER=php-fpm
 NGINX_PHP_UPSTREAM_PORT=9000
+
 
 # redis 配置
 REDIS_HOST_PORT=63790

@@ -1,10 +1,9 @@
 # 声明变量
 ARG INSTALL_XDEBUG
+ARG PHP_VERSION
 
 
-
-
-FROM php:7.1.9-fpm
+FROM php:${PHP_VERSION}-fpm
 
 RUN echo "deb http://mirrors.aliyun.com/debian/ stretch main non-free contrib" > /etc/apt/sources.list \
     && echo "deb-src http://mirrors.aliyun.com/debian/ stretch main non-free contrib" >> /etc/apt/sources.list \
