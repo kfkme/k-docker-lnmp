@@ -8,7 +8,7 @@ APP_CODE_PATH_HOST=./www
 APP_CODE_PATH_CONTAINER=/var/www
 # 挂载卷驱动
 VOLUMES_DRIVER=local
-DATA_PATH_HOST=~/kfkdock/data
+DATA_PATH_HOST=~/kfkdock-lnmp/data
 # 网络驱动
 NETWORKS_DRIVER=bridge
 # PHP版本
