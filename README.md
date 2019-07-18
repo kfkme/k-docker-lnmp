@@ -1,6 +1,6 @@
 
-# 基于Docker快速搭建Web服务
-根据自定义配置文件快速搭建Web环境。包含软件：PHP / Nginx / MySQL / MongoDB / Redis / Memcached
+# 使用 Docker 搭建 PHP 开发环境 
+PHP56、PHP72 / Nginx / MySQL / MongoDB / Redis / Memcached
 
 
  
@@ -14,8 +14,6 @@ build       应用
 data        数据库数据存放路径（mysql,redis,mongo）
 logs        日志存放路径（mysql,nginx,php）
 shell       常用shell存放路径
-ssh-key     SSH Key
-ssl-key     SSL Key存放路径（用于HTTPS协议）
 vhost       虚拟主机配置
 www         项目目录
 docker-compose.yml      docker-compose配置文件

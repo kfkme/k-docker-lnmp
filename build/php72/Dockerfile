@@ -1,9 +1,4 @@
-# 声明变量
-ARG INSTALL_XDEBUG
-ARG PHP_VERSION
-
-
-FROM php:${PHP_VERSION}-fpm
+FROM php:7.2.19-fpm
 
 RUN echo "deb http://mirrors.aliyun.com/debian/ stretch main non-free contrib" > /etc/apt/sources.list \
     && echo "deb-src http://mirrors.aliyun.com/debian/ stretch main non-free contrib" >> /etc/apt/sources.list \
@@ -13,6 +8,14 @@ RUN echo "deb http://mirrors.aliyun.com/debian/ stretch main non-free contrib" >
     && echo "deb-src http://mirrors.aliyun.com/debian/ stretch-updates main non-free contrib" >> /etc/apt/sources.list \
     && echo "deb http://mirrors.aliyun.com/debian/ stretch-backports main non-free contrib" >> /etc/apt/sources.list \
     && echo "deb-src http://mirrors.aliyun.com/debian/ stretch-backports main non-free contrib" >> /etc/apt/sources.list
+
+
+# 复制时区配置
+COPY ./timezone.ini /usr/local/etc/php/conf.d/timezone.ini
+# 设置时区
+RUN rm /etc/localtime
+RUN ln -s /usr/share/zoneinfo/Europe/London /etc/localtime
+RUN "date"
 
 # 安装基础
 RUN apt-get update \
@@ -45,7 +48,6 @@ RUN docker-php-ext-configure bcmath --enable-bcmath \
     && docker-php-ext-configure pdo_mysql --with-pdo-mysql \
     && docker-php-ext-configure pdo_pgsql --with-pgsql \
     && docker-php-ext-configure mbstring --enable-mbstring \
-    && docker-php-ext-configure soap --enable-soap \
     && docker-php-ext-install \
         bcmath \
         intl \
@@ -54,7 +56,6 @@ RUN docker-php-ext-configure bcmath --enable-bcmath \
         pcntl \
         pdo_mysql \
         pdo_pgsql \
-        soap \
         sockets \
         zip \
   && docker-php-ext-configure gd \
@@ -64,6 +65,10 @@ RUN docker-php-ext-configure bcmath --enable-bcmath \
     docker-php-ext-install gd \
   && docker-php-ext-install opcache \
   && docker-php-ext-enable opcache
+
+
+# PHP.INI
+COPY ./php72.ini /usr/local/etc/php/conf.d/custom-php.ini
 
 ## AST
 #RUN git clone https://github.com/nikic/php-ast /usr/src/php/ext/ast/ && \
@@ -83,84 +88,72 @@ RUN docker-php-ext-configure bcmath --enable-bcmath \
 #    && docker-php-ext-install intl
 
 # 安装 Redis 扩展
-COPY ./redis-3.1.3.tgz /home/redis.tgz
-RUN pecl install /home/redis.tgz \
-	&& echo "extension=redis.so" > /usr/local/etc/php/conf.d/redis.ini
+#COPY ./redis-3.1.3.tgz /home/redis.tgz
+#RUN pecl install /home/redis.tgz \
+#	&& echo "extension=redis.so" > /usr/local/etc/php/conf.d/redis.ini
 
 # 安装 PHP Memcached 扩展
-RUN curl -L -o /tmp/memcached.tar.gz "https://github.com/php-memcached-dev/php-memcached/archive/php7.tar.gz" \
-  && mkdir -p memcached \
-  && tar -C memcached -zxvf /tmp/memcached.tar.gz --strip 1 \
-  && ( \
-    cd memcached \
+#RUN curl -L -o /tmp/memcached.tar.gz "https://github.com/php-memcached-dev/php-memcached/archive/php7.tar.gz" \
+#  && mkdir -p memcached \
+#  && tar -C memcached -zxvf /tmp/memcached.tar.gz --strip 1 \
+#  && ( \
+#    cd memcached \
+#    && phpize \
+#    && ./configure \
+#    && make -j$(nproc) \
+#    && make install \
+#  ) \
+#  && rm -r memcached \
+#  && rm /tmp/memcached.tar.gz \
+#  && docker-php-ext-enable memcached
+
+
+# 安装 xDebug 插件
+RUN curl -fsSL 'https://xdebug.org/files/xdebug-2.6.1.tgz' -o xdebug.tar.gz \
+    && mkdir -p xdebug \
+    && tar -xf xdebug.tar.gz -C xdebug --strip-components=1 \
+    && rm xdebug.tar.gz \
+    && ( \
+    cd xdebug \
     && phpize \
-    && ./configure \
+    && ./configure --enable-xdebug \
     && make -j$(nproc) \
     && make install \
-  ) \
-  && rm -r memcached \
-  && rm /tmp/memcached.tar.gz \
-  && docker-php-ext-enable memcached
-
+    ) \
+    && rm -r xdebug \
+    && docker-php-ext-enable xdebug
+#配置 debugger
+RUN echo "xdebug.enable=1" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+RUN echo "xdebug.remote_enable=1" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+RUN echo "xdebug.remote_host=192.168.1.2" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+RUN echo "xdebug.remote_port=9003" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+RUN echo "xdebug.idekey=PHPSTORM" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
 # 安装 PHP MongoDB 扩展
 #RUN pecl install mongodb && \
 #    docker-php-ext-enable mongodb
 
-
-# 复制 opcache 配置
-COPY ./opcache.ini /usr/local/etc/php/conf.d/opcache.ini
-
-
-# 安装xDebug,如果启用
-RUN if [ ${INSTALL_XDEBUG} = true ]; then \
-    # 安装xdebug扩展
-    pecl install xdebug && \
-    docker-php-ext-enable xdebug \
-;fi
-
-
-# 复制xdebug信任用于远程调试
-# COPY ./xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
-
-# 复制时区配置
-COPY ./timezone.ini /usr/local/etc/php/conf.d/timezone.ini
-
-# 设置时区
-RUN rm /etc/localtime
-RUN ln -s /usr/share/zoneinfo/Europe/London /etc/localtime
-RUN "date"
-
-
-# Short open tags fix - another Symfony requirements
-COPY ./custom-php.ini /usr/local/etc/php/conf.d/custom-php.ini
-
-# Composer
+# 安装 Composer
 ENV COMPOSER_HOME /var/www/.composer
-RUN curl -sS https://getcomposer.org/installer | php -- \
-    --install-dir=/usr/bin \
-    --filename=composer
-RUN composer config -g repo.packagist composer https://packagist.laravel-china.org
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
+RUN composer config -g repo.packagist composer https://mirrors.cloud.tencent.com/composer
 
 RUN chown -R www-data:www-data /var/www/
 
 # 用户公钥
 
-RUN mkdir /root/.ssh \
-    && chown -R www-data:www-data /root/.ssh
+#RUN mkdir /root/.ssh \
+#    && chown -R www-data:www-data /root/.ssh
 # RUN sudo ssh-keygen -t rsa -C "kfkdock"  -f ~/.ssh/id_dsa
 #RUN ssh-keygen -t rsa -C "kfkdock" -f /root/.ssh/id_rsa
 
 
 # 部署公钥
-RUN mkdir /var/www/.ssh \
-    && chown -R www-data:www-data /var/www/.ssh
+#RUN mkdir /var/www/.ssh \
+#    && chown -R www-data:www-data /var/www/.ssh
 #RUN sudo -Hu www-data ssh-keygen -t rsa  -f /var/www/.ssh/id_rsa
 
-# coding webhook 日志
-RUN mkdir /var/log/webhook \
-    && chown -R www-data:www-data /var/log/webhook \
-    && sudo -Hu www-data touch /var/log/webhook/coding_webhook.log
+
 
 RUN mkdir -p $COMPOSER_HOME/cache
 

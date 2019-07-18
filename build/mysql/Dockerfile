@@ -12,6 +12,8 @@ COPY cron-shell/ /cron-shell/
 #将int-shell中的脚本都复制到初始化文件夹中
 COPY init-shell/ /docker-entrypoint-initdb.d/
 
+COPY ./my.cnf /etc/mysql/conf.d/my.cnf
+
 #修正时区
 RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
       && echo 'Asia/Shanghai' >/etc/timezone \

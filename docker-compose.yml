@@ -10,7 +10,7 @@ services:
         - "${NGINX_HOST_HTTP_PORT}:80"
         - "${NGINX_HOST_HTTPS_PORT}:443"
       links:
-        - "php"
+        - "php72"
         - "php56"
       volumes:
         # Nginx默认配置文件
@@ -25,13 +25,8 @@ services:
         - ./logs/nginx/:/var/log/nginx/
 
 ### PHP Container #############################
-  php:
-      build:
-        context: ./build/php
-        dockerfile: Dockerfile
-        args:
-          - INSTALL_XDEBUG=${INSTALL_XDEBUG}
-          - PHP_VERSION=${PHP_VERSION}
+  php72:
+      build: ./build/php72
       privileged: true
       ports:
         - "9007:9000"
@@ -41,18 +36,13 @@ services:
       volumes:
         # 映射访问地址
         - ./www/:/var/www/
-        # ssh 私人密钥
-        - ./ssh-key/:/root/.ssh/
-        # git 钩子，git版本有更新时 pull代码
-        - ./logs/webhook/:/var/log/webhook/
   php56:
-      build: ./build/php5.6
+      build: ./build/php56
       privileged: true
       ports:
         - "9056:9000"
       links:
         - "mysql"
-        - "mongo"
       volumes:
         - ./www/:/var/www/
 ### MYSQL Container #############################
@@ -82,16 +72,16 @@ services:
 
 ### PostgreSQL Container ####################################
 
-  postgres:
-      build: ./build/postgresql
-      ports:
-        - "5432:5432"
-      volumes:
-        - ./data/postgresql:/var/lib/postgresql/data
-      environment:
-        - POSTGRES_DB=default
-        - POSTGRES_USER=default
-        - POSTGRES_PASSWORD=kfkdock
+#  postgres:
+#      build: ./build/postgresql
+#      ports:
+#        - "5432:5432"
+#      volumes:
+#        - ./data/postgresql:/var/lib/postgresql/data
+#      environment:
+#        - POSTGRES_DB=default
+#        - POSTGRES_USER=default
+#        - POSTGRES_PASSWORD=kfkdock
 
 ### Redis Container #############################
 
@@ -106,22 +96,22 @@ services:
 
 ### Mongo Container #############################
 
-  mongo:
-      build: ./build/mongo
-      privileged: true
-      ports:
-        - "27017:27017"
-      volumes:
-        - ./data/mongo:/data/db
+#  mongo:
+#      build: ./build/mongo
+#      privileged: true
+#      ports:
+#        - "27017:27017"
+#      volumes:
+#        - ./data/mongo:/data/db
 
 ### Node Container #############################
 
-  node:
-      build: ./build/node
-      privileged: true
-      ports:
-        - "8080:8080"
-      volumes:
-        - ./www/:/var/www/
+#  node:
+#      build: ./build/node
+#      privileged: true
+#      ports:
+#        - "8080:8080"
+#      volumes:
+#        - ./www/:/var/www/
 networks:
   lnmp:
