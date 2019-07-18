@@ -17,8 +17,6 @@ services:
         - ./build/nginx/nginx.conf:/etc/nginx/nginx.conf
         # 配置虚拟主机
         - ./vhost/:/etc/nginx/conf.d/
-        # SSL密钥Key存放路径
-        - ./ssl-key/:/etc/nginx/cert/
         # Nginx访问路径
         - ./www/:/var/www/
         # Nginx访问路径
