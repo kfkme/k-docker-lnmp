@@ -11,11 +11,8 @@ RUN echo "deb http://mirrors.aliyun.com/debian/ stretch main non-free contrib" >
 
 
 # 复制时区配置
-COPY ./timezone.ini /usr/local/etc/php/conf.d/timezone.ini
-# 设置时区
-RUN rm /etc/localtime
-RUN ln -s /usr/share/zoneinfo/Europe/London /etc/localtime
-RUN "date"
+ENV TZ=Asia/Shanghai
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 # 安装基础
 RUN apt-get update \
