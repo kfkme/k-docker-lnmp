@@ -1,5 +1,19 @@
 FROM php:5.6-fpm
 
+RUN echo "deb http://mirrors.aliyun.com/debian/ stretch main non-free contrib" > /etc/apt/sources.list \
+    && echo "deb-src http://mirrors.aliyun.com/debian/ stretch main non-free contrib" >> /etc/apt/sources.list \
+    && echo "deb http://mirrors.aliyun.com/debian-security stretch/updates main" >> /etc/apt/sources.list \
+    && echo "deb-src http://mirrors.aliyun.com/debian-security stretch/updates main" >> /etc/apt/sources.list \
+    && echo "deb http://mirrors.aliyun.com/debian/ stretch-updates main non-free contrib" >> /etc/apt/sources.list \
+    && echo "deb-src http://mirrors.aliyun.com/debian/ stretch-updates main non-free contrib" >> /etc/apt/sources.list \
+    && echo "deb http://mirrors.aliyun.com/debian/ stretch-backports main non-free contrib" >> /etc/apt/sources.list \
+    && echo "deb-src http://mirrors.aliyun.com/debian/ stretch-backports main non-free contrib" >> /etc/apt/sources.list
+
+
+# 复制时区配置
+ENV TZ=Asia/Shanghai
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
 # 安装基础
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
@@ -43,29 +57,13 @@ RUN docker-php-ext-install \
   && docker-php-ext-install opcache \
   && docker-php-ext-enable opcache
 
-# 复制时区配置
-COPY ./timezone.ini /usr/local/etc/php/conf.d/timezone.ini
-
-# 设置时区
-RUN rm /etc/localtime
-RUN ln -s /usr/share/zoneinfo/Europe/London /etc/localtime
-RUN "date"
-
 
 # Short open tags fix - another Symfony requirements
 COPY ./custom-php.ini /usr/local/etc/php/conf.d/custom-php.ini
 
-# Composer
-ENV COMPOSER_HOME /var/www/.composer
-
-RUN curl -sS https://getcomposer.org/installer | php -- \
-    --install-dir=/usr/bin \
-    --filename=composer
 
 
 RUN chown -R www-data:www-data /var/www/
 
-RUN mkdir -p $COMPOSER_HOME/cache
 
-VOLUME $COMPOSER_HOME
 WORKDIR /var/www
