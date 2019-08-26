@@ -43,6 +43,7 @@ RUN apt-get update \
     subversion \
   && rm -rf /var/lib/apt/lists/*
 
+
 # 安装PHP插件
 RUN docker-php-ext-configure bcmath --enable-bcmath \
     && docker-php-ext-configure pcntl --enable-pcntl \
