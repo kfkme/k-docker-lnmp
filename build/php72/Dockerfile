@@ -104,14 +104,14 @@ COPY ./php72.ini /usr/local/etc/php/conf.d/custom-php.ini
 
 
 # 安装 cmake-3.15.2（swoole需要2.4版本以上）
-RUN cd /tmp \
-    && wget https://github.com/Kitware/CMake/releases/download/v3.15.2/cmake-3.15.2.tar.gz \
-    && tar xvf cmake-3.15.2.tar.gz \
-    && cd cmake-3.15.2 \
-    && ./bootstrap \
-    && make -j8 && make install \
-    && rm -rf /tmp/cmake-3.15.2 \
-    && rm /tmp/cmake-3.15.2.tar.gz
+#RUN cd /tmp \
+#    && wget https://github.com/Kitware/CMake/releases/download/v3.15.2/cmake-3.15.2.tar.gz \
+#    && tar xvf cmake-3.15.2.tar.gz \
+#    && cd cmake-3.15.2 \
+#    && ./bootstrap \
+#    && make -j8 && make install \
+#    && rm -rf /tmp/cmake-3.15.2 \
+#    && rm /tmp/cmake-3.15.2.tar.gz
 
 
 
@@ -143,16 +143,25 @@ RUN cd /tmp \
 #  && docker-php-ext-enable memcached
 
 # 安装 Swoole
-RUN cd /tmp \
-    && wget https://pecl.php.net/get/swoole-4.4.3.tgz \
-    && tar zxvf swoole-4.4.3.tgz \
-    && cd swoole-4.4.3 \
-    && phpize \
-    && ./configure --enable-coroutine --enable-openssl --enable-http2 --enable-async-redis --enable-sockets --enable-mysqlnd -with-php-config=/usr/local/bin/php-config \
-    && make && make install \
-    && echo "extension=swoole.so" > /usr/local/etc/php/conf.d/swoole.ini \
-	&& rm -rf /tmp/swoole-4.4.3 \
-	&& rm /tmp/swoole-4.4.3.tgz
+#RUN cd /tmp \
+#    && wget https://pecl.php.net/get/swoole-4.4.3.tgz \
+#    && tar zxvf swoole-4.4.3.tgz \
+#    && cd swoole-4.4.3 \
+#    && phpize \
+#    && ./configure --enable-coroutine --enable-openssl --enable-http2 --enable-async-redis --enable-sockets --enable-mysqlnd -with-php-config=/usr/local/bin/php-config \
+#    && make && make install \
+#    && echo "extension=swoole.so" > /usr/local/etc/php/conf.d/swoole.ini \
+#	&& rm -rf /tmp/swoole-4.4.3 \
+#	&& rm /tmp/swoole-4.4.3.tgz
+
+# 安装 Swoft-cli
+#RUN cd /tmp \
+#    && wget https://github.com/swoft-cloud/swoft-cli/releases/download/v0.0.6/swoftcli.phar \
+#    && php swoftcli.phar -V \
+#    && php swoftcli.phar -h \
+#    && mv swoftcli.phar /usr/local/bin/swoftcli \
+#    && chmod a+x /usr/local/bin/swoftcli
+
 
 
 # 安装 xDebug 插件

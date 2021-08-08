@@ -1,6 +1,6 @@
 
 # 使用 Docker 搭建 PHP 开发环境 
-PHP56、PHP72 / Nginx / MySQL / MongoDB / Redis / Memcached
+PHP（5.6/7.2/7.4）/ MySQL  / Nginx / Redis
 
 
  
@@ -11,7 +11,9 @@ PHP56、PHP72 / Nginx / MySQL / MongoDB / Redis / Memcached
 目录结构：
 ```
 build       应用
-data        数据库数据存放路径（mysql,redis,mongo）
+data        数据库数据存放路径（mysql,redis）
+doc         文档
+www         项目目录
 logs        日志存放路径（mysql,nginx,php）
 shell       常用shell存放路径
 vhost       虚拟主机配置
@@ -30,13 +32,13 @@ Linux ubuntu
 [安装Docker、安装docker-compose、配置Docker加速器](https://github.com/kfkme/kfkdock/blob/master/build/other/README_DEPEND_LINUX_UBUNTU.md)
 
 
-###### 2. 下载KFKDock源码 构建容器
+###### 2. 下载k-docker-lnmp源码 构建容器
 ```
 #进入用户目录
 cd ~/
 
 #下载源码
-git clone https://github.com/kfkme/kfkdock.git
+git clone https://github.com/kfkme/k-docker-lnmp.git
 
 #进入目录
 cd kfkdock
@@ -51,11 +53,11 @@ sudo docker-compose up -d nginx mysql php
 
 ```
 # 启动容器
-cd ~/kfkdock
+cd ~/k-docker-lnmp
 sudo docker-compose up
 
 #修改PHP文件
-vi ~/kfkdock/www/localhost/index.php
+vi ~/k-docker-lnmp/www/localhost/index.php
 
 #地址栏访问 localhost
 http://localhost
@@ -72,7 +74,7 @@ vi /build/host
 127.0.0.1   laravel.cc
 
 #复制一份Laravel项目
-~/kfkdock/www/laravel
+~/k-docker-lnmp/www/laravel
 
 #进入 php 容器
 docker-compose exec php bash
@@ -82,7 +84,7 @@ cd /var/www/laravel
 composer install --no-plugins --no-scripts
 
 #退出容器，设置Laravel项目的nginx配置
-vi ~/kfkdock/vhost/laravel.cc.conf
+vi ~/k-docker-lnmp/vhost/laravel.cc.conf
 server {
     listen       80;
     server_name  laravel.cc;
@@ -121,11 +123,6 @@ docker-compose exec node sh
 ###### 其他：
  [删除容器镜像、配置XDebug、docker-compose.yml语法解释、Dockerfile语法解释](https://github.com/kfkme/kfkdock/blob/master/build/other/README_OTHER.md)
 
-###### QQ交流群
-
-> 群号: 259937756 <a target="_blank" href="https://shang.qq.com/wpa/qunwpa?idkey=a593151f7e27a4cb7041db186f09f9727d6af2184737637d52f23d2431372065"><img border="0" src="https://pub.idqqimg.com/wpa/images/group.png" alt="KFKDock" title="KFKDock"></a>
-
-![群号: 259937756](http://ww1.sinaimg.cn/large/750f80a1ly1fp2b1kky0qj208e08e747.jpg)
 ###### GitHub地址 
 [https://github.com/kfkme/kfkdock](https://github.com/kfkme/kfkdock)
 

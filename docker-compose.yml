@@ -1,114 +1,83 @@
 version: '3.1'
 
 services:
-### Nginx Server Container #############################
+  ### Nginx Server Container #############################
   nginx:
-      build: ./build/nginx
-      privileged: true
-      ports:
-        - "${NGINX_HOST_HTTP_PORT}:80"
-        - "${NGINX_HOST_HTTPS_PORT}:443"
-      links:
-        - "php72"
-        - "php56"
-      volumes:
-        # Nginx默认配置文件
-        - ./build/nginx/nginx.conf:/etc/nginx/nginx.conf
-        # 配置虚拟主机
-        - ./vhost/:/etc/nginx/conf.d/
-        # Nginx访问路径
-        - ./www/:/var/www/
-        # Nginx访问路径
-        - ./logs/nginx/:/var/log/nginx/
+    build: ./build/nginx
+    privileged: true
+    ports:
+      - '${NGINX_HOST_HTTP_PORT}:80'
+      - '${NGINX_HOST_HTTPS_PORT}:443'
+      - '10001:10001'
+      - '10002:10002'
+      - '10003:10003'
+    links:
+      - 'php56'
+      - 'php72'
+    volumes:
+      # Nginx默认配置文件
+      - ./build/nginx/nginx.conf:/etc/nginx/nginx.conf
+      # 配置虚拟主机
+      - ./vhost/:/etc/nginx/conf.d/
+      # Nginx访问路径
+      - ./www/:/var/www/
+      # Nginx访问路径
+      - ./logs/nginx/:/var/log/nginx/
 
-### PHP Container #############################
-  php72:
-      build: ./build/php72
-      privileged: true
-      ports:
-        - "9007:9000"
-      links:
-        - "mysql"
-        - "redis"
-      volumes:
-        # 映射访问地址
-        - ./www/:/var/www/
+  ### PHP Container #############################
   php56:
-      build: ./build/php56
-      privileged: true
-      ports:
-        - "9056:9000"
-      links:
-        - "mysql"
-      volumes:
-        - ./www/:/var/www/
-### MYSQL Container #############################
+    build: ./build/php56
+    privileged: true
+    ports:
+      - '9056:9000'
+    links:
+      - 'mysql'
+    volumes:
+      - ./www/:/var/www/
+  php72:
+    build: ./build/php72
+    privileged: true
+    links:
+      - 'mysql'
+      - 'redis'
+    volumes:
+      # 映射访问地址
+      - ./www/:/var/www/
+  ### MYSQL Container #############################
   mysql:
-      build:
-        context: ./build/mysql
-        dockerfile: Dockerfile
-        args:
-          - MYSQL_VERSION=${MYSQL_VERSION}
-      restart: always
-      command:
-        - --character-set-server=utf8mb4
-        - --collation-server=utf8mb4_unicode_ci
-      privileged: true
-      ports:
-        - "${MYSQL_HOST_PORT}:3306"
-      volumes:
-        - ./data/mysql:/var/lib/mysql
-        - ./data/backup_mysql/:/data/backup/db
-        - ./logs/mysql/:/var/log/mysql
-      environment:
-        - MYSQL_DATABASE=${MYSQL_DATABASE}
-        - MYSQL_USER=${MYSQL_USER}
-        - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-        - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-        - TZ=${WORKSPACE_TIMEZONE}
+    build:
+      context: ./build/mysql
+      dockerfile: Dockerfile
+      args:
+        - MYSQL_VERSION=${MYSQL_VERSION}
+    restart: always
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    privileged: true
+    ports:
+      - '${MYSQL_HOST_PORT}:3306'
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+      - ./data/backup_mysql/:/data/backup/db
+      - ./logs/mysql/:/var/log/mysql
+    environment:
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - TZ=${WORKSPACE_TIMEZONE}
 
-### PostgreSQL Container ####################################
-
-#  postgres:
-#      build: ./build/postgresql
-#      ports:
-#        - "5432:5432"
-#      volumes:
-#        - ./data/postgresql:/var/lib/postgresql/data
-#      environment:
-#        - POSTGRES_DB=default
-#        - POSTGRES_USER=default
-#        - POSTGRES_PASSWORD=kfkdock
-
-### Redis Container #############################
+  ### Redis Container #############################
 
   redis:
-      build: ./build/redis
-      privileged: true
-      ports:
-        - "6379:6379"
-      volumes:
-        - ./data/redis:/data
-        - ./logs/redis:/var/log/redis
+    build: ./build/redis
+    privileged: true
+    ports:
+      - '6379:6379'
+    volumes:
+      - ./data/redis:/data
+      - ./logs/redis:/var/log/redis
 
-### Mongo Container #############################
-
-#  mongo:
-#      build: ./build/mongo
-#      privileged: true
-#      ports:
-#        - "27017:27017"
-#      volumes:
-#        - ./data/mongo:/data/db
-
-### Node Container #############################
-
-#  node:
-#      build: ./build/node
-#      privileged: true
-#      ports:
-#        - "8080:8080"
-#      volumes:
-#        - ./www/:/var/www/
-#networks:
-#  lnmp:
+networks:
+  lnmp:
