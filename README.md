@@ -123,10 +123,6 @@ docker-compose exec node sh
 ###### 其他：
  [删除容器镜像、配置XDebug、docker-compose.yml语法解释、Dockerfile语法解释](https://github.com/kfkme/kfkdock/blob/master/build/other/README_OTHER.md)
 
-###### GitHub地址 
-[https://github.com/kfkme/kfkdock](https://github.com/kfkme/kfkdock)
-
-###### 参考
+###### 鸣谢
 - [docker-lnmp](https://github.com/beautysoft/docker-lnmp)
 - [laradock](https://github.com/laradock/laradock)
-
